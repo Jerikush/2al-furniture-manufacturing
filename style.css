@@ -1367,3 +1367,37 @@ textarea:focus-visible {
   width: 100%;
   margin-top: 8px;
 }
+/* =========================================
+   SERVICES - PREMIUM
+   ========================================= */
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f1d477);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card h3 {
+  color: #0b1f3a;
+}
+
+.service-card p {
+  color: #697386;
+  line-height: 1.7;
+}
