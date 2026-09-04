@@ -1210,3 +1210,48 @@ textarea:focus-visible {
   background: #d4af37;
   border-radius: 10px;
 }
+/* =========================================
+   CALCULATOR BUTTONS - PREMIUM
+   ========================================= */
+
+.calculator-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.calculator-buttons .btn {
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: all 0.25s ease;
+}
+
+.calculator-buttons .btn:hover {
+  transform: translateY(-2px);
+}
+
+.calculator-buttons .btn-gold {
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.20);
+}
+
+.calculator-buttons .btn-outline-dark {
+  border: 1px solid rgba(7, 20, 38, 0.20);
+}
+
+@media (max-width: 600px) {
+  .calculator-buttons {
+    flex-wrap: wrap;
+  }
+
+  .calculator-buttons .btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 0 14px;
+  }
+}
