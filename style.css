@@ -1255,3 +1255,57 @@ textarea:focus-visible {
     padding: 0 14px;
   }
 }
+/* =========================================
+   MOBILE CALCULATOR
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  .calculator,
+  .calculator-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .calc-step {
+    width: 100%;
+  }
+
+  .calc-step h3 {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .estimate-box {
+    padding: 18px;
+  }
+
+  .estimate-row {
+    padding: 12px 0;
+  }
+
+  .calculator-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .calculator-buttons #nextBtn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .calculator-buttons .btn {
+    width: 100%;
+  }
+
+  .estimate-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .estimate-total strong {
+    font-size: 23px;
+  }
+}
