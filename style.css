@@ -1423,3 +1423,32 @@ textarea:focus-visible {
 .project-card h3 {
   color: #0b1f3a;
 }
+/* =========================================
+   NAVIGATION - PREMIUM
+   ========================================= */
+
+header nav a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 100%;
+  height: 2px;
+  background: #d4af37;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+header nav a:hover {
+  color: #d4af37;
+}
+
+header nav a:hover::after {
+  transform: scaleX(1);
+}
