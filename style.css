@@ -1189,3 +1189,24 @@ textarea:focus-visible {
     font-size: 11px;
   }
 }
+/* =========================================
+   CALCULATOR STEP HEADINGS
+   ========================================= */
+
+.calc-step h3 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #0b1f3a;
+  margin-bottom: 24px;
+}
+
+.calc-step h3::after {
+  content: "";
+  display: block;
+  width: 45px;
+  height: 2px;
+  margin-top: 10px;
+  background: #d4af37;
+  border-radius: 10px;
+}
