@@ -511,57 +511,75 @@
           </div>
         </div>
 
-        <form class="contact-form" id="contactForm">
+<form class="contact-form" id="contactForm">
 
-          <label>
-            Full Name
-            <input type="text" name="name" required>
-          </label>
+  <label>
+    Full Name
+    <input
+      type="text"
+      name="full_name"
+      placeholder="Enter your full name"
+      required
+    >
+  </label>
 
-          <label>
-            Contact Number
-            <input type="tel" name="phone" required>
-          </label>
+  <label>
+    Contact Number
+    <input
+      type="tel"
+      name="contact_number"
+      placeholder="Enter your contact number"
+      required
+    >
+  </label>
 
-          <label>
-            Email
-            <input type="email" name="email">
-          </label>
+  <label>
+    Email
+    <input
+      type="email"
+      name="email"
+      placeholder="Enter your email address"
+    >
+  </label>
 
-          <label>
-            Project Type
-            <select name="project">
-              <option>Kitchen Cabinet</option>
-              <option>Wardrobe</option>
-              <option>Vanity</option>
-              <option>Custom Cabinet</option>
-              <option>Custom Furniture</option>
-              <option>Design & Build</option>
-            </select>
-          </label>
+  <label>
+    Project Type
+    <select name="project_type">
+      <option>Kitchen Cabinet</option>
+      <option>Wardrobe</option>
+      <option>Vanity</option>
+      <option>Custom Cabinet</option>
+      <option>Custom Furniture</option>
+      <option>Design & Build</option>
+    </select>
+  </label>
 
-          <label>
-            Project Description
-            <textarea name="description" rows="5"></textarea>
-          </label>
+  <label>
+    Project Description
+    <textarea
+      name="project_description"
+      rows="5"
+      placeholder="Tell us about your project"
+    ></textarea>
+  </label>
 
-          <label>
-            Preferred Contact Method
-            <select name="contact">
-              <option>Facebook Messenger</option>
-              <option>Phone Call</option>
-              <option>SMS</option>
-              <option>Email</option>
-            </select>
-          </label>
+  <label>
+    Preferred Contact Method
+    <select name="preferred_contact">
+      <option>Facebook Messenger</option>
+      <option>Phone Call</option>
+      <option>SMS</option>
+      <option>Email</option>
+    </select>
+  </label>
 
-          <button type="submit" class="btn btn-gold">
-            Submit Inquiry
-          </button>
+  <button type="submit" class="btn btn-gold">
+    Submit Inquiry
+  </button>
 
-          <p id="formMessage" class="form-message"></p>
+  <p id="formMessage" class="form-message"></p>
 
-        </form>
+</form>
 
       </div>
     </section>
