@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>2AL Admin Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #18202b;
+    }
+
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #071426;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.25);
+    }
+
+    .login-box h1 {
+      color: #0b1f3a;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: #697386;
+      margin-bottom: 25px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 15px;
+      border: 1px solid #d8dce2;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 13px 20px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-gold {
+      width: 100%;
+      background: #d4af37;
+      color: #071426;
+    }
+
+    .error {
+      color: #c0392b;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #071426;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 20px;
+    }
+
+    .logout {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,.3);
+    }
+
+    main {
+      padding: 30px;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(7,20,38,.08);
+      border: 1px solid rgba(212,175,55,.18);
+    }
+
+    .stat span {
+      display: block;
+      color: #697386;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: .06em;
+    }
+
+    .stat strong {
+      font-size: 28px;
+      color: #0b1f3a;
+    }
+
+    .table-card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(7,20,38,.08);
+      overflow-x: auto;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .table-header h2 {
+      color: #0b1f3a;
+    }
+
+    .refresh {
+      background: #0b1f3a;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #edf0f3;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #697386;
+      font-size: 11px;
+      letter-spacing: .05em;
+    }
+
+    .status-select {
+      min-width: 140px;
+      margin: 0;
+      padding: 8px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #697386;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      header {
+        padding: 16px 18px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .login-box {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+      <h1>2AL Furniture</h1>
+
+      <p>Team Dashboard</p>
+
+      <form id="loginForm">
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Email"
+          required
+        >
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          required
+        >
+
+        <button class="btn-gold" type="submit">
+          Sign In
+        </button>
+
+        <div class="error" id="loginError"></div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+
+    <header>
+
+      <h1>2AL Admin Dashboard</h1>
+
+      <button class="logout" id="logoutBtn">
+        Logout
+      </button>
+
+    </header>
+
+
+    <main>
+
+      <div class="stats">
+
+        <div class="stat">
+          <span>TOTAL INQUIRIES</span>
+          <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>NEW</span>
+          <strong id="newCount">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>FOLLOW-UP</span>
+          <strong id="followupCount">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>COMPLETED</span>
+          <strong id="completedCount">0</strong>
+        </div>
+
+      </div>
+
+
+      <div class="table-card">
+
+        <div class="table-header">
+
+          <h2>Customer Inquiries</h2>
+
+          <button class="refresh" id="refreshBtn">
+            Refresh
+          </button>
+
+        </div>
+
+
+        <div id="tableContainer">
+
+          <div class="empty">
+            Loading inquiries...
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+<script>
+
+  /* =========================================
+     SUPABASE CONFIG
+     ========================================= */
+
+  const SUPABASE_URL = "https://smshlcnxqtkkawxcfugl.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Fr1S92D4HeFlJM4apbVP4g_eKp4lpXS";
+
+
+  const supabaseClient =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* =========================================
+     LOGIN
+     ========================================= */
+
+  const loginScreen =
+    document.getElementById("loginScreen");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const loginForm =
+    document.getElementById("loginForm");
+
+  const loginError =
+    document.getElementById("loginError");
+
+
+  loginForm.addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    loginError.textContent = "";
+
+    const email =
+      document.getElementById("email").value;
+
+    const password =
+      document.getElementById("password").value;
+
+
+    const { error } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+
+    if (error) {
+
+      loginError.textContent =
+        "Invalid email or password.";
+
+      return;
+
+    }
+
+
+    showDashboard();
+
+  });
+
+
+  /* =========================================
+     CHECK SESSION
+     ========================================= */
+
+  async function checkSession() {
+
+    const {
+      data: { session }
+    } = await supabaseClient.auth.getSession();
+
+
+    if (session) {
+
+      showDashboard();
+
+    } else {
+
+      showLogin();
+
+    }
+
+  }
+
+
+  function showLogin() {
+
+    loginScreen.style.display = "flex";
+
+    dashboard.style.display = "none";
+
+  }
+
+
+  function showDashboard() {
+
+    loginScreen.style.display = "none";
+
+    dashboard.style.display = "block";
+
+    loadInquiries();
+
+  }
+
+
+  /* =========================================
+     LOAD INQUIRIES
+     ========================================= */
+
+  async function loadInquiries() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("inquiries")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+
+    if (error) {
+
+      document.getElementById("tableContainer").innerHTML =
+        `<div class="empty">
+          Unable to load inquiries.
+        </div>`;
+
+      console.error(error);
+
+      return;
+
+    }
+
+
+    updateStats(data);
+
+    renderTable(data);
+
+  }
+
+
+  /* =========================================
+     STATS
+     ========================================= */
+
+  function updateStats(data) {
+
+    document.getElementById("totalCount").textContent =
+      data.length;
+
+
+    document.getElementById("newCount").textContent =
+      data.filter(item =>
+        item.status === "New"
+      ).length;
+
+
+    document.getElementById("followupCount").textContent =
+      data.filter(item =>
+        ["Contacted", "Consultation", "Quotation"]
+          .includes(item.status)
+      ).length;
+
+
+    document.getElementById("completedCount").textContent =
+      data.filter(item =>
+        item.status === "Completed"
+      ).length;
+
+  }
+
+
+  /* =========================================
+     TABLE
+     ========================================= */
+
+  function renderTable(data) {
+
+    const container =
+      document.getElementById("tableContainer");
+
+
+    if (!data.length) {
+
+      container.innerHTML =
+        `<div class="empty">
+          No customer inquiries yet.
+        </div>`;
+
+      return;
+
+    }
+
+
+    let html = `
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>DATE</th>
+            <th>CLIENT</th>
+            <th>CONTACT</th>
+            <th>EMAIL</th>
+            <th>PROJECT</th>
+            <th>DESCRIPTION</th>
+            <th>STATUS</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+    `;
+
+
+    data.forEach(item => {
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${formatDate(item.created_at)}
+          </td>
+
+          <td>
+            <strong>${escapeHtml(item.full_name || "")}</strong>
+          </td>
+
+          <td>
+            ${escapeHtml(item.contact_number || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(item.email || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(item.project_type || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(item.project_description || "")}
+          </td>
+
+          <td>
+
+            <select
+              class="status-select"
+              onchange="updateStatus('${item.id}', this.value)"
+            >
+
+              ${statusOptions(item.status)}
+
+            </select>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+
+    html += `
+        </tbody>
+      </table>
+    `;
+
+
+    container.innerHTML = html;
+
+  }
+
+
+  /* =========================================
+     STATUS
+     ========================================= */
+
+  function statusOptions(current) {
+
+    const statuses = [
+      "New",
+      "Contacted",
+      "Consultation",
+      "Quotation",
+      "Won",
+      "Production",
+      "Completed",
+      "Lost"
+    ];
+
+
+    return statuses.map(status => `
+
+      <option
+        value="${status}"
+        ${status === current ? "selected" : ""}
+      >
+        ${status}
+      </option>
+
+    `).join("");
+
+  }
+
+
+  async function updateStatus(id, status) {
+
+    const {
+      error
+    } = await supabaseClient
+      .from("inquiries")
+      .update({ status })
+      .eq("id", id);
+
+
+    if (error) {
+
+      alert("Unable to update status.");
+
+      console.error(error);
+
+      return;
+
+    }
+
+
+    loadInquiries();
+
+  }
+
+
+  /* =========================================
+     LOGOUT
+     ========================================= */
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async function() {
+
+      await supabaseClient.auth.signOut();
+
+      showLogin();
+
+    });
+
+
+  /* =========================================
+     REFRESH
+     ========================================= */
+
+  document
+    .getElementById("refreshBtn")
+    .addEventListener("click", loadInquiries);
+
+
+  /* =========================================
+     HELPERS
+     ========================================= */
+
+  function formatDate(date) {
+
+    return new Date(date).toLocaleDateString(
+      "en-PH",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }
+    );
+
+  }
+
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  checkSession();
+
+</script>
+
+</body>
+</html>
