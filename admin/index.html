@@ -311,15 +311,37 @@
 
       <div class="table-card">
 
-        <div class="table-header">
+     <div class="table-header">
 
-          <h2>Customer Inquiries</h2>
+  <h2>Customer Inquiries</h2>
 
-          <button class="refresh" id="refreshBtn">
-            Refresh
-          </button>
+  <div class="table-actions">
 
-        </div>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search inquiries..."
+    >
+
+    <select id="statusFilter">
+      <option value="All">All Status</option>
+      <option value="New">New</option>
+      <option value="Contacted">Contacted</option>
+      <option value="Consultation">Consultation</option>
+      <option value="Quotation">Quotation</option>
+      <option value="Won">Won</option>
+      <option value="Production">Production</option>
+      <option value="Completed">Completed</option>
+      <option value="Lost">Lost</option>
+    </select>
+
+    <button class="refresh" id="refreshBtn">
+      Refresh
+    </button>
+
+  </div>
+
+</div>
 
 
         <div id="tableContainer">
