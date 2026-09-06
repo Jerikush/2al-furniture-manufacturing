@@ -295,8 +295,189 @@
   .table-actions .refresh {
     width: 100%;
   }
+}/* =========================================
+   INQUIRY DETAILS MODAL
+   ========================================= */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(7, 20, 38, 0.68);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.inquiry-modal {
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 30px 90px rgba(7, 20, 38, 0.28);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px;
+  background: #0b1f3a;
+  border-bottom: 2px solid #d4af37;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 8px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+}
+
+.modal-body {
+  padding: 28px;
+}
+
+.detail-section {
+  margin-bottom: 28px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h3 {
+  margin: 0 0 18px;
+  color: #0b1f3a;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.detail-section h3::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin-top: 9px;
+  background: #d4af37;
+  border-radius: 10px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.detail-item {
+  padding: 16px;
+  background: #f8f9fb;
+  border: 1px solid rgba(7, 20, 38, 0.07);
+  border-radius: 10px;
+}
+
+.detail-item span {
+  display: block;
+  margin-bottom: 7px;
+  color: #697386;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.detail-item strong {
+  display: block;
+  color: #0b1f3a;
+  font-size: 14px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.description-item {
+  margin-top: 14px;
+}
+
+.description-item p {
+  margin: 0;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 18px 26px;
+  border-top: 1px solid rgba(7, 20, 38, 0.08);
+}
+
+.modal-footer .refresh {
+  min-width: 90px;
+  height: 42px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .inquiry-modal {
+    max-height: 94vh;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 18px;
+  }
+
+  .modal-body {
+    padding: 18px;
+  }
+
+  .modal-footer {
+    padding: 16px 18px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
   </style>
+  
 </head>
 
 <body>
@@ -751,17 +932,47 @@ function viewInquiry(id) {
     return;
   }
 
-  alert(
-    "Client: " + (inquiry.full_name || "") +
-    "\nContact: " + (inquiry.contact_number || "") +
-    "\nEmail: " + (inquiry.email || "") +
-    "\nProject: " + (inquiry.project_type || "") +
-    "\nDescription: " + (inquiry.project_description || "") +
-    "\nPreferred Contact: " + (inquiry.preferred_contact || "") +
-    "\nStatus: " + (inquiry.status || "")
-  );
-}
+  document.getElementById("detailName").textContent =
+    inquiry.full_name || "—";
 
+  document.getElementById("detailContact").textContent =
+    inquiry.contact_number || "—";
+
+  document.getElementById("detailEmail").textContent =
+    inquiry.email || "—";
+
+  document.getElementById("detailPreferredContact").textContent =
+    inquiry.preferred_contact || "—";
+
+  document.getElementById("detailProject").textContent =
+    inquiry.project_type || "—";
+
+  document.getElementById("detailStatus").textContent =
+    inquiry.status || "—";
+
+  document.getElementById("detailDescription").textContent =
+    inquiry.project_description || "—";
+
+  document.getElementById("inquiryModal").classList.add("active");
+}
+  
+function closeInquiryModal() {
+  document.getElementById("inquiryModal").classList.remove("active");
+}
+  document.getElementById("inquiryModal").addEventListener("click", function(event) {
+
+  if (event.target === this) {
+    closeInquiryModal();
+  }
+
+});
+  document.addEventListener("keydown", function(event) {
+
+  if (event.key === "Escape") {
+    closeInquiryModal();
+  }
+
+});
   /* =========================================
      STATUS
      ========================================= */
@@ -886,6 +1097,93 @@ document
   checkSession();
 
 </script>
+<div id="inquiryModal" class="modal-overlay">
 
+  <div class="inquiry-modal">
+
+    <div class="modal-header">
+      <h2>Inquiry Details</h2>
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="closeInquiryModal()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="detail-section">
+        <h3>Client Information</h3>
+
+        <div class="detail-grid">
+
+          <div class="detail-item">
+            <span>CLIENT</span>
+            <strong id="detailName">—</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>CONTACT</span>
+            <strong id="detailContact">—</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>EMAIL</span>
+            <strong id="detailEmail">—</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>PREFERRED CONTACT</span>
+            <strong id="detailPreferredContact">—</strong>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="detail-section">
+        <h3>Project Information</h3>
+
+        <div class="detail-grid">
+
+          <div class="detail-item">
+            <span>PROJECT TYPE</span>
+            <strong id="detailProject">—</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>STATUS</span>
+            <strong id="detailStatus">—</strong>
+          </div>
+
+        </div>
+
+        <div class="detail-item description-item">
+          <span>DESCRIPTION</span>
+          <p id="detailDescription">—</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="refresh"
+        onclick="closeInquiryModal()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 </body>
 </html>
