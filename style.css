@@ -1507,3 +1507,24 @@ footer a:hover {
     width: 100%;
   }
 }
+/* CONTACT FORM LABEL FIX */
+
+#contact .contact-form label {
+  display: block;
+  color: #0b1f3a;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+#contact .contact-form input,
+#contact .contact-form select,
+#contact .contact-form textarea {
+  display: block;
+  margin-top: 8px;
+}
+
+#contact .contact-form input::placeholder,
+#contact .contact-form textarea::placeholder {
+  color: #9aa3af;
+}
