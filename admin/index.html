@@ -959,18 +959,29 @@ function viewInquiry(id) {
 function closeInquiryModal() {
   document.getElementById("inquiryModal").classList.remove("active");
 }
-  document.getElementById("inquiryModal").addEventListener("click", function(event) {
+ document.addEventListener("DOMContentLoaded", function() {
 
-  if (event.target === this) {
-    closeInquiryModal();
+  const modal = document.getElementById("inquiryModal");
+
+  if (modal) {
+
+    modal.addEventListener("click", function(event) {
+
+      if (event.target === this) {
+        closeInquiryModal();
+      }
+
+    });
+
   }
 
-});
   document.addEventListener("keydown", function(event) {
 
-  if (event.key === "Escape") {
-    closeInquiryModal();
-  }
+    if (event.key === "Escape") {
+      closeInquiryModal();
+    }
+
+  });
 
 });
   /* =========================================
