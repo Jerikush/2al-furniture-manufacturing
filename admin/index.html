@@ -620,20 +620,12 @@
 
 function renderTable(data) {
 
-  const container =
-    document.getElementById("tableContainer");
+  const container = document.getElementById("tableContainer");
+  const searchInput = document.getElementById("searchInput");
+  const statusFilter = document.getElementById("statusFilter");
 
-  const searchInput =
-    document.getElementById("searchInput");
-
-  const statusFilter =
-    document.getElementById("statusFilter");
-
-  const searchTerm =
-    (searchInput?.value || "").toLowerCase().trim();
-
-  const selectedStatus =
-    statusFilter?.value || "All";
+  const searchTerm = (searchInput?.value || "").toLowerCase().trim();
+  const selectedStatus = statusFilter?.value || "All";
 
   const filteredData = data.filter(item => {
 
@@ -655,8 +647,8 @@ function renderTable(data) {
       item.status === selectedStatus;
 
     return matchesSearch && matchesStatus;
-  });
 
+  });
 
   if (!filteredData.length) {
 
@@ -668,10 +660,8 @@ function renderTable(data) {
     return;
   }
 
-
   let html = `
     <table>
-
       <thead>
         <tr>
           <th>DATE</th>
@@ -686,7 +676,6 @@ function renderTable(data) {
 
       <tbody>
   `;
-
 
   filteredData.forEach(item => {
 
@@ -737,22 +726,14 @@ function renderTable(data) {
 
   });
 
-
   html += `
       </tbody>
     </table>
   `;
 
   container.innerHTML = html;
+
 }
-
-    html += `
-        </tbody>
-      </table>
-    `;
-
-
-    container.innerHTML = html;
 
   /* =========================================
      STATUS
