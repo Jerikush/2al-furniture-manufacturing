@@ -4,7 +4,14 @@
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
+// SUPABASE CONNECTION
+const SUPABASE_URL = "https://smshlcnxqtkkawxcfugl.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Fr1S92D4HeFlJM4apbVP4g_eKp4lpXS";
 
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
   // -------------------------------
   // MOBILE MENU
   // -------------------------------
@@ -505,7 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // -------------------------------
-  // CONTACT FORM
+   // CONTACT FORM
   // -------------------------------
 
   const contactForm =
@@ -519,9 +526,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     contactForm.addEventListener(
       "submit",
-      event => {
+      async event => {
 
         event.preventDefault();
+
+        const formData = new FormData(contactForm);
+
+        const inquiry = {
+          full_name: formData.get("full_name"),
+          contact_number: formData.get("contact_number"),
+          email: formData.get("email"),
+          project_type: formData.get("project_type"),
+          project_description: formData.get("project_description"),
+          preferred_contact: formData.get("preferred_contact")
+        };
+
+
+        const { error } = await supabase
+          .from("inquiries")
+          .insert([inquiry]);
+
+
+        if (error) {
+
+          console.error("Inquiry submission error:", error);
+
+          if (formMessage) {
+
+            formMessage.textContent =
+              "Something went wrong. Please try again.";
+
+          }
+
+          return;
+        }
 
 
         if (formMessage) {
@@ -538,7 +576,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
   }
-
 
   // -------------------------------
   // INITIALIZE
