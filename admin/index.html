@@ -547,8 +547,133 @@
      TABLE
      ========================================= */
 
-  function renderTable(data) {
+function renderTable(data) {
 
+  const container =
+    document.getElementById("tableContainer");
+
+  const searchInput =
+    document.getElementById("searchInput");
+
+  const statusFilter =
+    document.getElementById("statusFilter");
+
+  const searchTerm =
+    (searchInput?.value || "").toLowerCase().trim();
+
+  const selectedStatus =
+    statusFilter?.value || "All";
+
+  const filteredData = data.filter(item => {
+
+    const searchableText = `
+      ${item.full_name || ""}
+      ${item.contact_number || ""}
+      ${item.email || ""}
+      ${item.project_type || ""}
+      ${item.project_description || ""}
+      ${item.status || ""}
+    `.toLowerCase();
+
+    const matchesSearch =
+      !searchTerm ||
+      searchableText.includes(searchTerm);
+
+    const matchesStatus =
+      selectedStatus === "All" ||
+      item.status === selectedStatus;
+
+    return matchesSearch && matchesStatus;
+  });
+
+
+  if (!filteredData.length) {
+
+    container.innerHTML =
+      `<div class="empty">
+        No matching inquiries found.
+      </div>`;
+
+    return;
+  }
+
+
+  let html = `
+    <table>
+
+      <thead>
+        <tr>
+          <th>DATE</th>
+          <th>CLIENT</th>
+          <th>CONTACT</th>
+          <th>EMAIL</th>
+          <th>PROJECT</th>
+          <th>DESCRIPTION</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+
+      <tbody>
+  `;
+
+
+  filteredData.forEach(item => {
+
+    html += `
+      <tr>
+
+        <td>
+          ${formatDate(item.created_at)}
+        </td>
+
+        <td>
+          <strong>
+            ${escapeHtml(item.full_name || "")}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(item.contact_number || "")}
+        </td>
+
+        <td>
+          ${escapeHtml(item.email || "")}
+        </td>
+
+        <td>
+          ${escapeHtml(item.project_type || "")}
+        </td>
+
+        <td>
+          ${escapeHtml(item.project_description || "")}
+        </td>
+
+        <td>
+
+          <select
+            class="status-select"
+            onchange="updateStatus('${item.id}', this.value)"
+          >
+
+            ${statusOptions(item.status)}
+
+          </select>
+
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+
+  html += `
+      </tbody>
+    </table>
+  `;
+
+  container.innerHTML = html;
+}
     const container =
       document.getElementById("tableContainer");
 
@@ -727,6 +852,15 @@
   document
     .getElementById("refreshBtn")
     .addEventListener("click", loadInquiries);
+  
+  document
+  .getElementById("searchInput")
+  .addEventListener("input", loadInquiries);
+
+
+document
+  .getElementById("statusFilter")
+  .addEventListener("change", loadInquiries);
 
 
   /* =========================================
