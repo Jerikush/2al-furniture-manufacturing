@@ -560,7 +560,7 @@
       .order("created_at", {
         ascending: false
       });
-
+window.inquiriesData = data || [];
 
     if (error) {
 
@@ -670,7 +670,8 @@ function renderTable(data) {
           <th>EMAIL</th>
           <th>PROJECT</th>
           <th>DESCRIPTION</th>
-          <th>STATUS</th>
+        <th>STATUS</th>
+<th>ACTION</th>
         </tr>
       </thead>
 
@@ -720,7 +721,14 @@ function renderTable(data) {
           </select>
 
         </td>
-
+<td>
+  <button
+    class="details-btn"
+    onclick="viewInquiry('${item.id}')"
+  >
+    View
+  </button>
+</td>
       </tr>
     `;
 
@@ -733,6 +741,25 @@ function renderTable(data) {
 
   container.innerHTML = html;
 
+}
+function viewInquiry(id) {
+
+  const inquiry = window.inquiriesData?.find(item => item.id === id);
+
+  if (!inquiry) {
+    alert("Inquiry not found.");
+    return;
+  }
+
+  alert(
+    "Client: " + (inquiry.full_name || "") +
+    "\nContact: " + (inquiry.contact_number || "") +
+    "\nEmail: " + (inquiry.email || "") +
+    "\nProject: " + (inquiry.project_type || "") +
+    "\nDescription: " + (inquiry.project_description || "") +
+    "\nPreferred Contact: " + (inquiry.preferred_contact || "") +
+    "\nStatus: " + (inquiry.status || "")
+  );
 }
 
   /* =========================================
