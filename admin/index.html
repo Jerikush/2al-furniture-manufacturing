@@ -130,7 +130,7 @@
 
     main {
       padding: 30px;
-      max-width: 1400px;
+      max-width: 1500px;
       margin: auto;
     }
 
@@ -140,14 +140,14 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
       margin-bottom: 30px;
     }
 
     .stat {
       background: white;
-      padding: 22px;
+      padding: 20px;
       border-radius: 14px;
       box-shadow: 0 10px 30px rgba(7,20,38,.08);
       border: 1px solid rgba(212,175,55,.18);
@@ -156,14 +156,26 @@
     .stat span {
       display: block;
       color: #697386;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 700;
       margin-bottom: 10px;
       letter-spacing: .06em;
     }
 
     .stat strong {
-      font-size: 28px;
+      font-size: 26px;
+      color: #0b1f3a;
+    }
+
+    .stat.overdue strong {
+      color: #c0392b;
+    }
+
+    .stat.today strong {
+      color: #8a6d00;
+    }
+
+    .stat.upcoming strong {
       color: #0b1f3a;
     }
 
@@ -198,7 +210,8 @@
     }
 
     #searchInput,
-    #statusFilter {
+    #statusFilter,
+    #followUpFilter {
       height: 42px;
       padding: 0 14px;
       border: 1px solid rgba(7, 20, 38, 0.14);
@@ -215,11 +228,16 @@
     }
 
     #statusFilter {
+      min-width: 140px;
+    }
+
+    #followUpFilter {
       min-width: 150px;
     }
 
     #searchInput:focus,
-    #statusFilter:focus {
+    #statusFilter:focus,
+    #followUpFilter:focus {
       border-color: #d4af37;
       box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
     }
@@ -232,7 +250,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1050px;
+      min-width: 1180px;
     }
 
     th,
@@ -357,7 +375,6 @@
     }
 
     .modal-header h2 {
-      margin: 0;
       color: #ffffff;
       font-size: 20px;
       font-weight: 700;
@@ -556,6 +573,14 @@
        RESPONSIVE
        ========================================= */
 
+    @media (max-width: 1200px) {
+
+      .stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+    }
+
     @media (max-width: 900px) {
 
       .stats {
@@ -601,6 +626,7 @@
       }
 
       #statusFilter,
+      #followUpFilter,
       .table-actions .refresh {
         width: 100%;
       }
@@ -742,9 +768,11 @@
 
     <main>
 
+
       <!-- STATS -->
 
       <div class="stats">
+
 
         <div class="stat">
 
@@ -768,9 +796,42 @@
         </div>
 
 
+        <div class="stat overdue">
+
+          <span>OVERDUE</span>
+
+          <strong id="overdueCount">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat today">
+
+          <span>FOLLOW-UP TODAY</span>
+
+          <strong id="todayCount">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat upcoming">
+
+          <span>UPCOMING</span>
+
+          <strong id="upcomingCount">
+            0
+          </strong>
+
+        </div>
+
+
         <div class="stat">
 
-          <span>FOLLOW-UP</span>
+          <span>FOLLOW-UP TOTAL</span>
 
           <strong id="followupCount">
             0
@@ -789,6 +850,7 @@
 
         </div>
 
+
       </div>
 
 
@@ -796,7 +858,9 @@
 
       <div class="table-card">
 
+
         <div class="table-header">
+
 
           <h2>
             Customer Inquiries
@@ -804,6 +868,7 @@
 
 
           <div class="table-actions">
+
 
             <input
               type="text"
@@ -853,12 +918,38 @@
             </select>
 
 
+            <select id="followUpFilter">
+
+              <option value="All">
+                All Follow-Up
+              </option>
+
+              <option value="Overdue">
+                Overdue
+              </option>
+
+              <option value="Today">
+                Today
+              </option>
+
+              <option value="Upcoming">
+                Upcoming
+              </option>
+
+              <option value="No Date">
+                No Date
+              </option>
+
+            </select>
+
+
             <button
               class="refresh"
               id="refreshBtn"
             >
               Refresh
             </button>
+
 
           </div>
 
@@ -873,9 +964,12 @@
 
         </div>
 
+
       </div>
 
+
     </main>
+
 
   </div>
 
@@ -923,6 +1017,7 @@
 
 
           <div class="detail-grid">
+
 
             <div class="detail-item">
 
@@ -975,6 +1070,7 @@
 
             </div>
 
+
           </div>
 
         </div>
@@ -990,6 +1086,7 @@
 
 
           <div class="detail-grid">
+
 
             <div class="detail-item">
 
@@ -1029,6 +1126,20 @@
 
             </div>
 
+
+            <div class="detail-item">
+
+              <span>
+                FOLLOW-UP STATUS
+              </span>
+
+              <strong id="detailFollowUpStatus">
+                —
+              </strong>
+
+            </div>
+
+
           </div>
 
 
@@ -1056,6 +1167,7 @@
             </p>
 
           </div>
+
 
         </div>
 
@@ -1135,6 +1247,7 @@
 
               </div>
 
+
             </div>
 
 
@@ -1154,6 +1267,7 @@
 
             <div class="edit-actions">
 
+
               <button
                 type="button"
                 class="refresh"
@@ -1171,7 +1285,9 @@
                 Save Changes
               </button>
 
+
             </div>
+
 
           </div>
 
@@ -1184,6 +1300,7 @@
       <!-- MODAL FOOTER -->
 
       <div class="modal-footer">
+
 
         <button
           type="button"
@@ -1202,6 +1319,7 @@
           Edit Inquiry
         </button>
 
+
       </div>
 
 
@@ -1211,6 +1329,7 @@
 
 
   <script>
+
 
     /* =========================================
        SUPABASE CONFIG
@@ -1238,24 +1357,35 @@
     let currentInquiryId = null;
 
 
+    window.inquiriesData = [];
+
+
     /* =========================================
        DOM ELEMENTS
        ========================================= */
 
     const loginScreen =
-      document.getElementById("loginScreen");
+      document.getElementById(
+        "loginScreen"
+      );
 
 
     const dashboard =
-      document.getElementById("dashboard");
+      document.getElementById(
+        "dashboard"
+      );
 
 
     const loginForm =
-      document.getElementById("loginForm");
+      document.getElementById(
+        "loginForm"
+      );
 
 
     const loginError =
-      document.getElementById("loginError");
+      document.getElementById(
+        "loginError"
+      );
 
 
     /* =========================================
@@ -1272,14 +1402,20 @@
 
 
         const email =
-          document.getElementById("email").value;
+          document.getElementById(
+            "email"
+          ).value.trim();
 
 
         const password =
-          document.getElementById("password").value;
+          document.getElementById(
+            "password"
+          ).value;
 
 
-        const { error } =
+        const {
+          error
+        } =
           await supabaseClient.auth
             .signInWithPassword({
               email,
@@ -1310,9 +1446,12 @@
     async function checkSession() {
 
       const {
-        data: { session }
+        data: {
+          session
+        }
       } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient.auth
+          .getSession();
 
 
       if (session) {
@@ -1365,9 +1504,12 @@
         await supabaseClient
           .from("inquiries")
           .select("*")
-          .order("created_at", {
-            ascending: false
-          });
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
 
 
       if (error) {
@@ -1409,6 +1551,42 @@
 
     function updateStats(data) {
 
+      const activeFollowUps =
+        data.filter(item =>
+          item.follow_up_date &&
+          ![
+            "Completed",
+            "Lost"
+          ].includes(
+            item.status
+          )
+        );
+
+
+      const overdue =
+        activeFollowUps.filter(item =>
+          getFollowUpStatus(
+            item.follow_up_date
+          ).type === "overdue"
+        );
+
+
+      const today =
+        activeFollowUps.filter(item =>
+          getFollowUpStatus(
+            item.follow_up_date
+          ).type === "today"
+        );
+
+
+      const upcoming =
+        activeFollowUps.filter(item =>
+          getFollowUpStatus(
+            item.follow_up_date
+          ).type === "upcoming"
+        );
+
+
       document.getElementById(
         "totalCount"
       ).textContent =
@@ -1423,22 +1601,28 @@
         ).length;
 
 
-      /*
-       FOLLOW-UP COUNT
+      document.getElementById(
+        "overdueCount"
+      ).textContent =
+        overdue.length;
 
-       Counts inquiries that have
-       a follow-up date and are not
-       Completed or Lost.
-      */
+
+      document.getElementById(
+        "todayCount"
+      ).textContent =
+        today.length;
+
+
+      document.getElementById(
+        "upcomingCount"
+      ).textContent =
+        upcoming.length;
+
 
       document.getElementById(
         "followupCount"
       ).textContent =
-        data.filter(item =>
-          item.follow_up_date &&
-          !["Completed", "Lost"]
-            .includes(item.status)
-        ).length;
+        activeFollowUps.length;
 
 
       document.getElementById(
@@ -1468,13 +1652,19 @@
       const month =
         String(
           now.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
 
 
       const day =
         String(
           now.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
 
 
       return `${year}-${month}-${day}`;
@@ -1529,7 +1719,9 @@
     function formatFollowUpDate(date) {
 
       if (!date) {
+
         return "";
+
       }
 
 
@@ -1571,6 +1763,12 @@
         );
 
 
+      const followUpFilter =
+        document.getElementById(
+          "followUpFilter"
+        );
+
+
       const searchTerm =
         (
           searchInput?.value || ""
@@ -1580,10 +1778,16 @@
 
 
       const selectedStatus =
-        statusFilter?.value || "All";
+        statusFilter?.value ||
+        "All";
 
 
-      const filteredData =
+      const selectedFollowUp =
+        followUpFilter?.value ||
+        "All";
+
+
+      let filteredData =
         data.filter(item => {
 
 
@@ -1621,12 +1825,143 @@
               selectedStatus;
 
 
+          const followUpStatus =
+            getFollowUpStatus(
+              item.follow_up_date
+            );
+
+
+          let matchesFollowUp =
+            true;
+
+
+          if (
+            selectedFollowUp ===
+            "Overdue"
+          ) {
+
+            matchesFollowUp =
+              followUpStatus.type ===
+              "overdue";
+
+          }
+
+
+          if (
+            selectedFollowUp ===
+            "Today"
+          ) {
+
+            matchesFollowUp =
+              followUpStatus.type ===
+              "today";
+
+          }
+
+
+          if (
+            selectedFollowUp ===
+            "Upcoming"
+          ) {
+
+            matchesFollowUp =
+              followUpStatus.type ===
+              "upcoming";
+
+          }
+
+
+          if (
+            selectedFollowUp ===
+            "No Date"
+          ) {
+
+            matchesFollowUp =
+              followUpStatus.type ===
+              "none";
+
+          }
+
+
           return (
             matchesSearch &&
-            matchesStatus
+            matchesStatus &&
+            matchesFollowUp
           );
 
         });
+
+
+      /*
+       FOLLOW-UP PRIORITY SORT
+
+       Overdue first
+       Today second
+       Upcoming third
+       No Date last
+      */
+
+      const priority = {
+        overdue: 1,
+        today: 2,
+        upcoming: 3,
+        none: 4
+      };
+
+
+      filteredData.sort(
+        function(a, b) {
+
+          const statusA =
+            getFollowUpStatus(
+              a.follow_up_date
+            );
+
+
+          const statusB =
+            getFollowUpStatus(
+              b.follow_up_date
+            );
+
+
+          if (
+            priority[statusA.type] !==
+            priority[statusB.type]
+          ) {
+
+            return (
+              priority[statusA.type] -
+              priority[statusB.type]
+            );
+
+          }
+
+
+          if (
+            a.follow_up_date &&
+            b.follow_up_date
+          ) {
+
+            return (
+              a.follow_up_date.localeCompare(
+                b.follow_up_date
+              )
+            );
+
+          }
+
+
+          return (
+            new Date(
+              b.created_at
+            ) -
+            new Date(
+              a.created_at
+            )
+          );
+
+        }
+      );
 
 
       if (!filteredData.length) {
@@ -1676,129 +2011,133 @@
       `;
 
 
-      filteredData.forEach(item => {
+      filteredData.forEach(
+        item => {
 
 
-        const followUp =
-          getFollowUpStatus(
-            item.follow_up_date
-          );
+          const followUp =
+            getFollowUpStatus(
+              item.follow_up_date
+            );
 
 
-        const followUpDate =
-          formatFollowUpDate(
-            item.follow_up_date
-          );
+          const followUpDate =
+            formatFollowUpDate(
+              item.follow_up_date
+            );
 
 
-        html += `
+          html += `
 
-          <tr>
+            <tr>
 
-            <td>
-              ${formatDate(
-                item.created_at
-              )}
-            </td>
+              <td>
+                ${formatDate(
+                  item.created_at
+                )}
+              </td>
 
 
-            <td>
+              <td>
 
-              <strong>
+                <strong>
+                  ${escapeHtml(
+                    item.full_name || ""
+                  )}
+                </strong>
+
+              </td>
+
+
+              <td>
                 ${escapeHtml(
-                  item.full_name || ""
+                  item.contact_number || ""
                 )}
-              </strong>
-
-            </td>
+              </td>
 
 
-            <td>
-              ${escapeHtml(
-                item.contact_number || ""
-              )}
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                item.email || ""
-              )}
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                item.project_type || ""
-              )}
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                item.project_description || ""
-              )}
-            </td>
-
-
-            <td>
-
-              <select
-                class="status-select"
-                onchange="updateStatus(
-                  '${item.id}',
-                  this.value
-                )"
-              >
-
-                ${statusOptions(
-                  item.status
+              <td>
+                ${escapeHtml(
+                  item.email || ""
                 )}
-
-              </select>
-
-            </td>
+              </td>
 
 
-            <td>
-
-              <span
-                class="followup-status followup-${followUp.type}"
-              >
-                ${followUp.label}
-              </span>
-
-              ${
-                followUpDate
-                  ? `
-                    <span class="followup-date">
-                      ${followUpDate}
-                    </span>
-                  `
-                  : ""
-              }
-
-            </td>
+              <td>
+                ${escapeHtml(
+                  item.project_type || ""
+                )}
+              </td>
 
 
-            <td>
+              <td>
+                ${escapeHtml(
+                  item.project_description || ""
+                )}
+              </td>
 
-              <button
-                class="details-btn"
-                onclick="viewInquiry(
-                  '${item.id}'
-                )"
-              >
-                View
-              </button>
 
-            </td>
+              <td>
 
-          </tr>
+                <select
+                  class="status-select"
+                  onchange="updateStatus(
+                    '${item.id}',
+                    this.value
+                  )"
+                >
 
-        `;
+                  ${statusOptions(
+                    item.status
+                  )}
 
-      });
+                </select>
+
+              </td>
+
+
+              <td>
+
+                <span
+                  class="followup-status followup-${followUp.type}"
+                >
+                  ${followUp.label}
+                </span>
+
+
+                ${
+                  followUpDate
+                    ? `
+                      <span class="followup-date">
+                        ${followUpDate}
+                      </span>
+                    `
+                    : ""
+                }
+
+              </td>
+
+
+              <td>
+
+                <button
+                  class="details-btn"
+                  onclick="viewInquiry(
+                    '${item.id}'
+                  )"
+                >
+                  View
+                </button>
+
+              </td>
+
+
+            </tr>
+
+          `;
+
+        }
+      );
 
 
       html += `
@@ -1842,6 +2181,12 @@
         return;
 
       }
+
+
+      const followUp =
+        getFollowUpStatus(
+          inquiry.follow_up_date
+        );
 
 
       document.getElementById(
@@ -1893,6 +2238,12 @@
           inquiry.follow_up_date
         ) ||
         "—";
+
+
+      document.getElementById(
+        "detailFollowUpStatus"
+      ).textContent =
+        followUp.label;
 
 
       document.getElementById(
@@ -2158,20 +2509,22 @@
 
 
       return statuses
-        .map(status => `
+        .map(
+          status => `
 
-          <option
-            value="${status}"
-            ${
-              status === current
-                ? "selected"
-                : ""
-            }
-          >
-            ${status}
-          </option>
+            <option
+              value="${status}"
+              ${
+                status === current
+                  ? "selected"
+                  : ""
+              }
+            >
+              ${status}
+            </option>
 
-        `)
+          `
+        )
         .join("");
 
     }
@@ -2217,7 +2570,7 @@
       }
 
 
-      loadInquiries();
+      await loadInquiries();
 
     }
 
@@ -2302,55 +2655,69 @@
 
 
     /* =========================================
-       MODAL EVENTS
+       FOLLOW-UP FILTER
        ========================================= */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function() {
+    document
+      .getElementById(
+        "followUpFilter"
+      )
+      .addEventListener(
+        "change",
+        function() {
 
-        const modal =
-          document.getElementById(
-            "inquiryModal"
-          );
-
-
-        if (modal) {
-
-          modal.addEventListener(
-            "click",
-            function(event) {
-
-              if (
-                event.target ===
-                this
-              ) {
-
-                closeInquiryModal();
-
-              }
-
-            }
+          renderTable(
+            window.inquiriesData ||
+            []
           );
 
         }
+      );
 
 
-        document.addEventListener(
-          "keydown",
-          function(event) {
+    /* =========================================
+       MODAL EVENTS
+       ========================================= */
 
-            if (
-              event.key ===
-              "Escape"
-            ) {
+    const modal =
+      document.getElementById(
+        "inquiryModal"
+      );
 
-              closeInquiryModal();
 
-            }
+    if (modal) {
+
+      modal.addEventListener(
+        "click",
+        function(event) {
+
+          if (
+            event.target ===
+            this
+          ) {
+
+            closeInquiryModal();
 
           }
-        );
+
+        }
+      );
+
+    }
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key ===
+          "Escape"
+        ) {
+
+          closeInquiryModal();
+
+        }
 
       }
     );
@@ -2418,7 +2785,9 @@
 
     checkSession();
 
+
   </script>
+
 
 </body>
 </html>
