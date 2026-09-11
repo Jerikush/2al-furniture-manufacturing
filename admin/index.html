@@ -250,7 +250,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1280px;
+      min-width: 1400px;
     }
 
     th,
@@ -273,6 +273,21 @@
       min-width: 140px;
       margin: 0;
       padding: 8px;
+    }
+
+    /* =========================================
+       ASSIGNED TO
+       ========================================= */
+
+    .assigned-cell {
+      min-width: 120px;
+      color: #0b1f3a;
+      font-weight: 600;
+    }
+
+    .assigned-none {
+      color: #9aa3af;
+      font-weight: 400;
     }
 
     /* =========================================
@@ -1021,6 +1036,11 @@
             </div>
 
             <div class="detail-item">
+              <span>ASSIGNED TO</span>
+              <strong id="detailAssignedTo">—</strong>
+            </div>
+
+            <div class="detail-item">
               <span>FOLLOW-UP DATE</span>
               <strong id="detailFollowUpDate">—</strong>
             </div>
@@ -1100,6 +1120,21 @@
                   <option value="Lost">Lost</option>
 
                 </select>
+
+              </div>
+
+
+              <div class="edit-field">
+
+                <label for="editAssignedTo">
+                  ASSIGNED TO
+                </label>
+
+                <input
+                  type="text"
+                  id="editAssignedTo"
+                  placeholder="Enter team member"
+                >
 
               </div>
 
@@ -1656,6 +1691,7 @@
             ${item.status || ""}
             ${item.notes || ""}
             ${item.follow_up_date || ""}
+            ${item.assigned_to || ""}
 
           `.toLowerCase();
 
@@ -1844,6 +1880,7 @@
               <th>EMAIL</th>
               <th>PROJECT</th>
               <th>DESCRIPTION</th>
+              <th>ASSIGNED TO</th>
               <th>PRIORITY</th>
               <th>STATUS</th>
               <th>FOLLOW-UP</th>
@@ -1881,6 +1918,13 @@
             ].includes(
               item.status
             );
+
+          const assignedTo =
+            item.assigned_to
+              ? escapeHtml(
+                  item.assigned_to
+                )
+              : `<span class="assigned-none">Unassigned</span>`;
 
 
           html += `
@@ -1923,6 +1967,10 @@
                 ${escapeHtml(
                   item.project_description || ""
                 )}
+              </td>
+
+              <td class="assigned-cell">
+                ${assignedTo}
               </td>
 
               <td>
@@ -2111,6 +2159,12 @@
         "—";
 
       document.getElementById(
+        "detailAssignedTo"
+      ).textContent =
+        inquiry.assigned_to ||
+        "Unassigned";
+
+      document.getElementById(
         "detailFollowUpDate"
       ).textContent =
         formatFollowUpDate(
@@ -2193,6 +2247,12 @@
       ).value =
         inquiry.status ||
         "New";
+
+      document.getElementById(
+        "editAssignedTo"
+      ).value =
+        inquiry.assigned_to ||
+        "";
 
       document.getElementById(
         "editFollowUpDate"
@@ -2307,6 +2367,12 @@
         "New";
 
       document.getElementById(
+        "editAssignedTo"
+      ).value =
+        inquiry.assigned_to ||
+        "";
+
+      document.getElementById(
         "editFollowUpDate"
       ).value =
         inquiry.follow_up_date ||
@@ -2369,6 +2435,11 @@
           "editStatus"
         ).value;
 
+      const assignedTo =
+        document.getElementById(
+          "editAssignedTo"
+        ).value.trim();
+
       const followUpDate =
         document.getElementById(
           "editFollowUpDate"
@@ -2389,6 +2460,9 @@
 
             status:
               status,
+
+            assigned_to:
+              assignedTo || null,
 
             follow_up_date:
               followUpDate,
