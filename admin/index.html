@@ -1017,11 +1017,94 @@ function renderTable(data) {
 }
 let currentInquiryId = null;
 
+let currentInquiryId = null;
+
 function viewInquiry(id) {
+
   currentInquiryId = id;
 
+  const inquiry =
+    window.inquiriesData?.find(item => item.id === id);
+
+  if (!inquiry) {
+    alert("Inquiry not found.");
+    return;
+  }
+
+  document.getElementById("detailName").textContent =
+    inquiry.full_name || "—";
+
+  document.getElementById("detailContact").textContent =
+    inquiry.contact_number || "—";
+
+  document.getElementById("detailEmail").textContent =
+    inquiry.email || "—";
+
+  document.getElementById("detailPreferredContact").textContent =
+    inquiry.preferred_contact || "—";
+
+  document.getElementById("detailProject").textContent =
+    inquiry.project_type || "—";
+
+  document.getElementById("detailStatus").textContent =
+    inquiry.status || "—";
+
+  document.getElementById("detailFollowUpDate").textContent =
+    inquiry.follow_up_date || "—";
+
+  document.getElementById("detailDescription").textContent =
+    inquiry.project_description || "—";
+
+  document.getElementById("detailNotes").textContent =
+    inquiry.notes || "—";
+
+  document
+    .getElementById("inquiryModal")
+    .classList.add("active");
+}
+
+
 function editInquiry() {
+
+  if (!currentInquiryId) {
+    alert("No inquiry selected.");
+    return;
+  }
+
+  const inquiry =
+    window.inquiriesData?.find(
+      item => item.id === currentInquiryId
+    );
+
+  if (!inquiry) {
+    alert("Inquiry not found.");
+    return;
+  }
+
+  document.getElementById("editStatus").value =
+    inquiry.status || "New";
+
+  document.getElementById("editFollowUpDate").value =
+    inquiry.follow_up_date || "";
+
+  document.getElementById("editNotes").value =
+    inquiry.notes || "";
+
+  document
+    .getElementById("inquiryEditForm")
+    .classList.add("active");
+}
+
+
 function cancelEditInquiry() {
+
+  document
+    .getElementById("inquiryEditForm")
+    .classList.remove("active");
+
+}
+
+
 async function saveInquiryChanges() {
 
   if (!currentInquiryId) {
@@ -1068,77 +1151,9 @@ async function saveInquiryChanges() {
   await loadInquiries();
 
   viewInquiry(currentInquiryId);
-
 }
-  document
-    .getElementById("inquiryEditForm")
-    .classList.remove("active");
 
-}
-  if (!currentInquiryId) {
-    alert("No inquiry selected.");
-    return;
-  }
 
-  const inquiry =
-    window.inquiriesData?.find(
-      item => item.id === currentInquiryId
-    );
-
-  if (!inquiry) {
-    alert("Inquiry not found.");
-    return;
-  }
-
-  document.getElementById("editStatus").value =
-    inquiry.status || "New";
-
-  document.getElementById("editFollowUpDate").value =
-    inquiry.follow_up_date || "";
-
-  document.getElementById("editNotes").value =
-    inquiry.notes || "";
-
-  document
-    .getElementById("inquiryEditForm")
-    .classList.add("active");
-}
-  const inquiry = window.inquiriesData?.find(item => item.id === id);
-
-  if (!inquiry) {
-    alert("Inquiry not found.");
-    return;
-  }
-
-  document.getElementById("detailName").textContent =
-    inquiry.full_name || "—";
-
-  document.getElementById("detailContact").textContent =
-    inquiry.contact_number || "—";
-
-  document.getElementById("detailEmail").textContent =
-    inquiry.email || "—";
-
-  document.getElementById("detailPreferredContact").textContent =
-    inquiry.preferred_contact || "—";
-
-  document.getElementById("detailProject").textContent =
-    inquiry.project_type || "—";
-
- document.getElementById("detailStatus").textContent =
-  inquiry.status || "—";
-
-document.getElementById("detailFollowUpDate").textContent =
-  inquiry.follow_up_date || "—";
-
-document.getElementById("detailDescription").textContent =
-  inquiry.project_description || "—";
-
-document.getElementById("detailNotes").textContent =
-  inquiry.notes || "—";
-  document.getElementById("inquiryModal").classList.add("active");
-}
-  
 function closeInquiryModal() {
 
   document
