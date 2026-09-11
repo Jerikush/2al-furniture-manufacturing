@@ -1139,7 +1139,17 @@ document.getElementById("detailNotes").textContent =
 }
   
 function closeInquiryModal() {
-  document.getElementById("inquiryModal").classList.remove("active");
+
+  document
+    .getElementById("inquiryModal")
+    .classList.remove("active");
+
+  document
+    .getElementById("inquiryEditForm")
+    .classList.remove("active");
+
+  currentInquiryId = null;
+
 }
  document.addEventListener("DOMContentLoaded", function() {
 
