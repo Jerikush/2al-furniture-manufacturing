@@ -250,7 +250,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1180px;
+      min-width: 1280px;
     }
 
     th,
@@ -275,18 +275,36 @@
       padding: 8px;
     }
 
-    .details-btn {
-      background: #d4af37;
-      color: #071426;
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-size: 12px;
+    /* =========================================
+       PRIORITY
+       ========================================= */
+
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 70px;
+      padding: 6px 9px;
+      border-radius: 7px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      white-space: nowrap;
     }
 
-    .empty {
-      text-align: center;
-      padding: 40px;
-      color: #697386;
+    .priority-high {
+      background: rgba(192,57,43,.12);
+      color: #c0392b;
+    }
+
+    .priority-normal {
+      background: rgba(212,175,55,.16);
+      color: #8a6d00;
+    }
+
+    .priority-low {
+      background: rgba(11,31,58,.08);
+      color: #0b1f3a;
     }
 
     /* =========================================
@@ -312,17 +330,17 @@
     }
 
     .followup-upcoming {
-      background: rgba(11, 31, 58, 0.08);
+      background: rgba(11,31,58,.08);
       color: #0b1f3a;
     }
 
     .followup-today {
-      background: rgba(212, 175, 55, 0.18);
+      background: rgba(212,175,55,.18);
       color: #8a6d00;
     }
 
     .followup-overdue {
-      background: rgba(192, 57, 43, 0.12);
+      background: rgba(192,57,43,.12);
       color: #c0392b;
     }
 
@@ -334,6 +352,52 @@
     }
 
     /* =========================================
+       ACTIONS
+       ========================================= */
+
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 180px;
+    }
+
+    .action-btn {
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .action-view {
+      background: #d4af37;
+      color: #071426;
+    }
+
+    .action-contact {
+      background: #0b1f3a;
+      color: white;
+    }
+
+    .action-follow {
+      background: #eef1f5;
+      color: #0b1f3a;
+      border: 1px solid #d8dce2;
+    }
+
+    .action-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #697386;
+    }
+
+    /* =========================================
        MODAL
        ========================================= */
 
@@ -342,7 +406,7 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(7, 20, 38, 0.68);
+      background: rgba(7,20,38,.68);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
       padding: 24px;
@@ -361,8 +425,8 @@
       overflow-y: auto;
       background: #ffffff;
       border-radius: 16px;
-      box-shadow: 0 30px 90px rgba(7, 20, 38, 0.28);
-      border: 1px solid rgba(212, 175, 55, 0.28);
+      box-shadow: 0 30px 90px rgba(7,20,38,.28);
+      border: 1px solid rgba(212,175,55,.28);
     }
 
     .modal-header {
@@ -383,20 +447,14 @@
     .modal-close {
       width: 38px;
       height: 38px;
-      border: 1px solid rgba(255, 255, 255, 0.20);
+      border: 1px solid rgba(255,255,255,.20);
       border-radius: 8px;
       background: transparent;
       color: #ffffff;
       font-size: 25px;
       line-height: 1;
       cursor: pointer;
-      transition: all 0.2s ease;
       padding: 0;
-    }
-
-    .modal-close:hover {
-      background: rgba(212, 175, 55, 0.15);
-      color: #d4af37;
     }
 
     .modal-body {
@@ -416,7 +474,7 @@
       color: #0b1f3a;
       font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
     }
 
     .detail-section h3::after {
@@ -438,7 +496,7 @@
     .detail-item {
       padding: 16px;
       background: #f8f9fb;
-      border: 1px solid rgba(7, 20, 38, 0.07);
+      border: 1px solid rgba(7,20,38,.07);
       border-radius: 10px;
     }
 
@@ -448,7 +506,7 @@
       color: #697386;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
     }
 
     .detail-item strong {
@@ -480,7 +538,7 @@
       display: none;
       margin-top: 28px;
       padding-top: 28px;
-      border-top: 1px solid rgba(7, 20, 38, 0.08);
+      border-top: 1px solid rgba(7,20,38,.08);
     }
 
     .edit-section.active {
@@ -503,7 +561,7 @@
       color: #697386;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
     }
 
     .edit-field input,
@@ -512,7 +570,7 @@
       width: 100%;
       min-height: 44px;
       padding: 11px 13px;
-      border: 1px solid rgba(7, 20, 38, 0.14);
+      border: 1px solid rgba(7,20,38,.14);
       border-radius: 9px;
       background: #ffffff;
       color: #0b1f3a;
@@ -531,7 +589,7 @@
     .edit-field select:focus,
     .edit-field textarea:focus {
       border-color: #d4af37;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
+      box-shadow: 0 0 0 3px rgba(212,175,55,.10);
     }
 
     .edit-actions {
@@ -559,7 +617,7 @@
       justify-content: flex-end;
       gap: 10px;
       padding: 18px 26px;
-      border-top: 1px solid rgba(7, 20, 38, 0.08);
+      border-top: 1px solid rgba(7,20,38,.08);
     }
 
     .modal-footer button {
@@ -573,18 +631,18 @@
        RESPONSIVE
        ========================================= */
 
-    @media (max-width: 1200px) {
+    @media (max-width:1200px) {
 
       .stats {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4,1fr);
       }
 
     }
 
-    @media (max-width: 900px) {
+    @media (max-width:900px) {
 
       .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
       }
 
       main {
@@ -612,7 +670,7 @@
 
     }
 
-    @media (max-width: 600px) {
+    @media (max-width:600px) {
 
       .table-actions {
         display: grid;
@@ -673,7 +731,7 @@
 
     }
 
-    @media (max-width: 500px) {
+    @media (max-width:500px) {
 
       .stats {
         grid-template-columns: 1fr;
@@ -696,9 +754,7 @@
 <body>
 
 
-  <!-- =========================================
-       LOGIN
-       ========================================= -->
+  <!-- LOGIN -->
 
   <div class="login-screen" id="loginScreen">
 
@@ -743,9 +799,7 @@
   </div>
 
 
-  <!-- =========================================
-       DASHBOARD
-       ========================================= -->
+  <!-- DASHBOARD -->
 
   <div
     class="dashboard"
@@ -773,83 +827,40 @@
 
       <div class="stats">
 
-
         <div class="stat">
-
           <span>TOTAL INQUIRIES</span>
-
-          <strong id="totalCount">
-            0
-          </strong>
-
+          <strong id="totalCount">0</strong>
         </div>
-
 
         <div class="stat">
-
           <span>NEW</span>
-
-          <strong id="newCount">
-            0
-          </strong>
-
+          <strong id="newCount">0</strong>
         </div>
-
 
         <div class="stat overdue">
-
           <span>OVERDUE</span>
-
-          <strong id="overdueCount">
-            0
-          </strong>
-
+          <strong id="overdueCount">0</strong>
         </div>
-
 
         <div class="stat today">
-
           <span>FOLLOW-UP TODAY</span>
-
-          <strong id="todayCount">
-            0
-          </strong>
-
+          <strong id="todayCount">0</strong>
         </div>
-
 
         <div class="stat upcoming">
-
           <span>UPCOMING</span>
-
-          <strong id="upcomingCount">
-            0
-          </strong>
-
+          <strong id="upcomingCount">0</strong>
         </div>
 
-
         <div class="stat">
-
           <span>FOLLOW-UP TOTAL</span>
-
-          <strong id="followupCount">
-            0
-          </strong>
-
+          <strong id="followupCount">0</strong>
         </div>
-
 
         <div class="stat">
-
           <span>COMPLETED</span>
-
-          <strong id="completedCount">
-            0
-          </strong>
-
+          <strong id="completedCount">0</strong>
         </div>
-
 
       </div>
 
@@ -858,17 +869,13 @@
 
       <div class="table-card">
 
-
         <div class="table-header">
-
 
           <h2>
             Customer Inquiries
           </h2>
 
-
           <div class="table-actions">
-
 
             <input
               type="text"
@@ -876,72 +883,29 @@
               placeholder="Search inquiries..."
             >
 
-
             <select id="statusFilter">
 
-              <option value="All">
-                All Status
-              </option>
-
-              <option value="New">
-                New
-              </option>
-
-              <option value="Contacted">
-                Contacted
-              </option>
-
-              <option value="Consultation">
-                Consultation
-              </option>
-
-              <option value="Quotation">
-                Quotation
-              </option>
-
-              <option value="Won">
-                Won
-              </option>
-
-              <option value="Production">
-                Production
-              </option>
-
-              <option value="Completed">
-                Completed
-              </option>
-
-              <option value="Lost">
-                Lost
-              </option>
+              <option value="All">All Status</option>
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Consultation">Consultation</option>
+              <option value="Quotation">Quotation</option>
+              <option value="Won">Won</option>
+              <option value="Production">Production</option>
+              <option value="Completed">Completed</option>
+              <option value="Lost">Lost</option>
 
             </select>
-
 
             <select id="followUpFilter">
 
-              <option value="All">
-                All Follow-Up
-              </option>
-
-              <option value="Overdue">
-                Overdue
-              </option>
-
-              <option value="Today">
-                Today
-              </option>
-
-              <option value="Upcoming">
-                Upcoming
-              </option>
-
-              <option value="No Date">
-                No Date
-              </option>
+              <option value="All">All Follow-Up</option>
+              <option value="Overdue">Overdue</option>
+              <option value="Today">Today</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="No Date">No Date</option>
 
             </select>
-
 
             <button
               class="refresh"
@@ -949,7 +913,6 @@
             >
               Refresh
             </button>
-
 
           </div>
 
@@ -964,19 +927,15 @@
 
         </div>
 
-
       </div>
 
 
     </main>
 
-
   </div>
 
 
-  <!-- =========================================
-       INQUIRY MODAL
-       ========================================= -->
+  <!-- INQUIRY MODAL -->
 
   <div
     id="inquiryModal"
@@ -992,7 +951,6 @@
           Inquiry Details
         </h2>
 
-
         <button
           type="button"
           class="modal-close"
@@ -1007,7 +965,7 @@
       <div class="modal-body">
 
 
-        <!-- CLIENT INFORMATION -->
+        <!-- CLIENT -->
 
         <div class="detail-section">
 
@@ -1015,68 +973,34 @@
             Client Information
           </h3>
 
-
           <div class="detail-grid">
 
-
             <div class="detail-item">
-
-              <span>
-                CLIENT
-              </span>
-
-              <strong id="detailName">
-                —
-              </strong>
-
+              <span>CLIENT</span>
+              <strong id="detailName">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                CONTACT
-              </span>
-
-              <strong id="detailContact">
-                —
-              </strong>
-
+              <span>CONTACT</span>
+              <strong id="detailContact">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                EMAIL
-              </span>
-
-              <strong id="detailEmail">
-                —
-              </strong>
-
+              <span>EMAIL</span>
+              <strong id="detailEmail">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                PREFERRED CONTACT
-              </span>
-
-              <strong id="detailPreferredContact">
-                —
-              </strong>
-
+              <span>PREFERRED CONTACT</span>
+              <strong id="detailPreferredContact">—</strong>
             </div>
-
 
           </div>
 
         </div>
 
 
-        <!-- PROJECT INFORMATION -->
+        <!-- PROJECT -->
 
         <div class="detail-section">
 
@@ -1084,61 +1008,32 @@
             Project Information
           </h3>
 
-
           <div class="detail-grid">
 
-
             <div class="detail-item">
-
-              <span>
-                PROJECT TYPE
-              </span>
-
-              <strong id="detailProject">
-                —
-              </strong>
-
+              <span>PROJECT TYPE</span>
+              <strong id="detailProject">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                STATUS
-              </span>
-
-              <strong id="detailStatus">
-                —
-              </strong>
-
+              <span>STATUS</span>
+              <strong id="detailStatus">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                FOLLOW-UP DATE
-              </span>
-
-              <strong id="detailFollowUpDate">
-                —
-              </strong>
-
+              <span>FOLLOW-UP DATE</span>
+              <strong id="detailFollowUpDate">—</strong>
             </div>
 
-
             <div class="detail-item">
-
-              <span>
-                FOLLOW-UP STATUS
-              </span>
-
-              <strong id="detailFollowUpStatus">
-                —
-              </strong>
-
+              <span>FOLLOW-UP STATUS</span>
+              <strong id="detailFollowUpStatus">—</strong>
             </div>
 
+            <div class="detail-item">
+              <span>PRIORITY</span>
+              <strong id="detailPriority">—</strong>
+            </div>
 
           </div>
 
@@ -1168,11 +1063,10 @@
 
           </div>
 
-
         </div>
 
 
-        <!-- EDIT FORM -->
+        <!-- EDIT -->
 
         <div
           id="inquiryEditForm"
@@ -1188,7 +1082,6 @@
 
             <div class="edit-grid">
 
-
               <div class="edit-field">
 
                 <label for="editStatus">
@@ -1197,37 +1090,14 @@
 
                 <select id="editStatus">
 
-                  <option value="New">
-                    New
-                  </option>
-
-                  <option value="Contacted">
-                    Contacted
-                  </option>
-
-                  <option value="Consultation">
-                    Consultation
-                  </option>
-
-                  <option value="Quotation">
-                    Quotation
-                  </option>
-
-                  <option value="Won">
-                    Won
-                  </option>
-
-                  <option value="Production">
-                    Production
-                  </option>
-
-                  <option value="Completed">
-                    Completed
-                  </option>
-
-                  <option value="Lost">
-                    Lost
-                  </option>
+                  <option value="New">New</option>
+                  <option value="Contacted">Contacted</option>
+                  <option value="Consultation">Consultation</option>
+                  <option value="Quotation">Quotation</option>
+                  <option value="Won">Won</option>
+                  <option value="Production">Production</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Lost">Lost</option>
 
                 </select>
 
@@ -1246,7 +1116,6 @@
                 >
 
               </div>
-
 
             </div>
 
@@ -1267,7 +1136,6 @@
 
             <div class="edit-actions">
 
-
               <button
                 type="button"
                 class="refresh"
@@ -1275,7 +1143,6 @@
               >
                 Cancel
               </button>
-
 
               <button
                 type="button"
@@ -1285,9 +1152,7 @@
                 Save Changes
               </button>
 
-
             </div>
-
 
           </div>
 
@@ -1297,10 +1162,7 @@
       </div>
 
 
-      <!-- MODAL FOOTER -->
-
       <div class="modal-footer">
-
 
         <button
           type="button"
@@ -1310,7 +1172,6 @@
           Close
         </button>
 
-
         <button
           type="button"
           class="btn-gold"
@@ -1319,9 +1180,7 @@
           Edit Inquiry
         </button>
 
-
       </div>
-
 
     </div>
 
@@ -1330,18 +1189,15 @@
 
   <script>
 
-
     /* =========================================
-       SUPABASE CONFIG
+       SUPABASE
        ========================================= */
 
     const SUPABASE_URL =
       "https://smshlcnxqtkkawxcfugl.supabase.co";
 
-
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_Fr1S92D4HeFlJM4apbVP4g_eKp4lpXS";
-
 
     const supabaseClient =
       supabase.createClient(
@@ -1356,36 +1212,24 @@
 
     let currentInquiryId = null;
 
-
     window.inquiriesData = [];
 
 
     /* =========================================
-       DOM ELEMENTS
+       LOGIN ELEMENTS
        ========================================= */
 
     const loginScreen =
-      document.getElementById(
-        "loginScreen"
-      );
-
+      document.getElementById("loginScreen");
 
     const dashboard =
-      document.getElementById(
-        "dashboard"
-      );
-
+      document.getElementById("dashboard");
 
     const loginForm =
-      document.getElementById(
-        "loginForm"
-      );
-
+      document.getElementById("loginForm");
 
     const loginError =
-      document.getElementById(
-        "loginError"
-      );
+      document.getElementById("loginError");
 
 
     /* =========================================
@@ -1400,18 +1244,13 @@
 
         loginError.textContent = "";
 
-
         const email =
-          document.getElementById(
-            "email"
-          ).value.trim();
-
+          document.getElementById("email")
+            .value.trim();
 
         const password =
-          document.getElementById(
-            "password"
-          ).value;
-
+          document.getElementById("password")
+            .value;
 
         const {
           error
@@ -1422,7 +1261,6 @@
               password
             });
 
-
         if (error) {
 
           loginError.textContent =
@@ -1431,7 +1269,6 @@
           return;
 
         }
-
 
         showDashboard();
 
@@ -1452,7 +1289,6 @@
       } =
         await supabaseClient.auth
           .getSession();
-
 
       if (session) {
 
@@ -1492,7 +1328,7 @@
 
 
     /* =========================================
-       LOAD INQUIRIES
+       LOAD
        ========================================= */
 
     async function loadInquiries() {
@@ -1511,7 +1347,6 @@
             }
           );
 
-
       if (error) {
 
         document.getElementById(
@@ -1521,22 +1356,18 @@
             Unable to load inquiries.
           </div>`;
 
-
         console.error(error);
 
         return;
 
       }
 
-
       window.inquiriesData =
         data || [];
-
 
       updateStats(
         window.inquiriesData
       );
-
 
       renderTable(
         window.inquiriesData
@@ -1557,11 +1388,8 @@
           ![
             "Completed",
             "Lost"
-          ].includes(
-            item.status
-          )
+          ].includes(item.status)
         );
-
 
       const overdue =
         activeFollowUps.filter(item =>
@@ -1570,14 +1398,12 @@
           ).type === "overdue"
         );
 
-
       const today =
         activeFollowUps.filter(item =>
           getFollowUpStatus(
             item.follow_up_date
           ).type === "today"
         );
-
 
       const upcoming =
         activeFollowUps.filter(item =>
@@ -1586,12 +1412,10 @@
           ).type === "upcoming"
         );
 
-
       document.getElementById(
         "totalCount"
       ).textContent =
         data.length;
-
 
       document.getElementById(
         "newCount"
@@ -1600,30 +1424,25 @@
           item.status === "New"
         ).length;
 
-
       document.getElementById(
         "overdueCount"
       ).textContent =
         overdue.length;
-
 
       document.getElementById(
         "todayCount"
       ).textContent =
         today.length;
 
-
       document.getElementById(
         "upcomingCount"
       ).textContent =
         upcoming.length;
 
-
       document.getElementById(
         "followupCount"
       ).textContent =
         activeFollowUps.length;
-
 
       document.getElementById(
         "completedCount"
@@ -1644,10 +1463,8 @@
       const now =
         new Date();
 
-
       const year =
         now.getFullYear();
-
 
       const month =
         String(
@@ -1657,7 +1474,6 @@
           "0"
         );
 
-
       const day =
         String(
           now.getDate()
@@ -1665,7 +1481,6 @@
           2,
           "0"
         );
-
 
       return `${year}-${month}-${day}`;
 
@@ -1683,10 +1498,8 @@
 
       }
 
-
       const today =
         getTodayString();
-
 
       if (date < today) {
 
@@ -1697,7 +1510,6 @@
 
       }
 
-
       if (date === today) {
 
         return {
@@ -1706,7 +1518,6 @@
         };
 
       }
-
 
       return {
         type: "upcoming",
@@ -1724,7 +1535,6 @@
 
       }
 
-
       return new Date(
         date + "T00:00:00"
       ).toLocaleDateString(
@@ -1740,6 +1550,59 @@
 
 
     /* =========================================
+       PRIORITY
+       ========================================= */
+
+    function getPriority(item) {
+
+      if (
+        item.status === "New" &&
+        !item.follow_up_date
+      ) {
+
+        return {
+          type: "high",
+          label: "HIGH"
+        };
+
+      }
+
+      if (
+        getFollowUpStatus(
+          item.follow_up_date
+        ).type === "overdue"
+      ) {
+
+        return {
+          type: "high",
+          label: "HIGH"
+        };
+
+      }
+
+      if (
+        item.status === "New" ||
+        getFollowUpStatus(
+          item.follow_up_date
+        ).type === "today"
+      ) {
+
+        return {
+          type: "normal",
+          label: "NORMAL"
+        };
+
+      }
+
+      return {
+        type: "low",
+        label: "LOW"
+      };
+
+    }
+
+
+    /* =========================================
        TABLE
        ========================================= */
 
@@ -1750,24 +1613,20 @@
           "tableContainer"
         );
 
-
       const searchInput =
         document.getElementById(
           "searchInput"
         );
-
 
       const statusFilter =
         document.getElementById(
           "statusFilter"
         );
 
-
       const followUpFilter =
         document.getElementById(
           "followUpFilter"
         );
-
 
       const searchTerm =
         (
@@ -1776,41 +1635,29 @@
         .toLowerCase()
         .trim();
 
-
       const selectedStatus =
         statusFilter?.value ||
         "All";
-
 
       const selectedFollowUp =
         followUpFilter?.value ||
         "All";
 
-
       let filteredData =
         data.filter(item => {
-
 
           const searchableText = `
 
             ${item.full_name || ""}
-
             ${item.contact_number || ""}
-
             ${item.email || ""}
-
             ${item.project_type || ""}
-
             ${item.project_description || ""}
-
             ${item.status || ""}
-
             ${item.notes || ""}
-
             ${item.follow_up_date || ""}
 
           `.toLowerCase();
-
 
           const matchesSearch =
             !searchTerm ||
@@ -1818,22 +1665,18 @@
               searchTerm
             );
 
-
           const matchesStatus =
             selectedStatus === "All" ||
             item.status ===
               selectedStatus;
-
 
           const followUpStatus =
             getFollowUpStatus(
               item.follow_up_date
             );
 
-
           let matchesFollowUp =
             true;
-
 
           if (
             selectedFollowUp ===
@@ -1846,7 +1689,6 @@
 
           }
 
-
           if (
             selectedFollowUp ===
             "Today"
@@ -1857,7 +1699,6 @@
               "today";
 
           }
-
 
           if (
             selectedFollowUp ===
@@ -1870,7 +1711,6 @@
 
           }
 
-
           if (
             selectedFollowUp ===
             "No Date"
@@ -1882,7 +1722,6 @@
 
           }
 
-
           return (
             matchesSearch &&
             matchesStatus &&
@@ -1892,64 +1731,79 @@
         });
 
 
-      /*
-       FOLLOW-UP PRIORITY SORT
+      /* PRIORITY SORT */
 
-       Overdue first
-       Today second
-       Upcoming third
-       No Date last
-      */
-
-      const priority = {
-        overdue: 1,
-        today: 2,
-        upcoming: 3,
-        none: 4
+      const priorityRank = {
+        high: 1,
+        normal: 2,
+        low: 3
       };
 
-
       filteredData.sort(
-        function(a, b) {
+        function(a,b) {
 
-          const statusA =
+          const priorityA =
+            getPriority(a);
+
+          const priorityB =
+            getPriority(b);
+
+          if (
+            priorityRank[
+              priorityA.type
+            ] !==
+            priorityRank[
+              priorityB.type
+            ]
+          ) {
+
+            return (
+              priorityRank[
+                priorityA.type
+              ] -
+              priorityRank[
+                priorityB.type
+              ]
+            );
+
+          }
+
+          const followA =
             getFollowUpStatus(
               a.follow_up_date
             );
 
-
-          const statusB =
+          const followB =
             getFollowUpStatus(
               b.follow_up_date
             );
 
+          const followRank = {
+            overdue: 1,
+            today: 2,
+            upcoming: 3,
+            none: 4
+          };
 
           if (
-            priority[statusA.type] !==
-            priority[statusB.type]
+            followRank[
+              followA.type
+            ] !==
+            followRank[
+              followB.type
+            ]
           ) {
 
             return (
-              priority[statusA.type] -
-              priority[statusB.type]
+              followRank[
+                followA.type
+              ] -
+              followRank[
+                followB.type
+              ]
             );
 
           }
-
-
-          if (
-            a.follow_up_date &&
-            b.follow_up_date
-          ) {
-
-            return (
-              a.follow_up_date.localeCompare(
-                b.follow_up_date
-              )
-            );
-
-          }
-
 
           return (
             new Date(
@@ -1985,21 +1839,14 @@
             <tr>
 
               <th>DATE</th>
-
               <th>CLIENT</th>
-
               <th>CONTACT</th>
-
               <th>EMAIL</th>
-
               <th>PROJECT</th>
-
               <th>DESCRIPTION</th>
-
+              <th>PRIORITY</th>
               <th>STATUS</th>
-
               <th>FOLLOW-UP</th>
-
               <th>ACTION</th>
 
             </tr>
@@ -2014,16 +1861,25 @@
       filteredData.forEach(
         item => {
 
-
           const followUp =
             getFollowUpStatus(
               item.follow_up_date
             );
 
-
           const followUpDate =
             formatFollowUpDate(
               item.follow_up_date
+            );
+
+          const priority =
+            getPriority(item);
+
+          const isClosed =
+            [
+              "Completed",
+              "Lost"
+            ].includes(
+              item.status
             );
 
 
@@ -2037,17 +1893,13 @@
                 )}
               </td>
 
-
               <td>
-
                 <strong>
                   ${escapeHtml(
                     item.full_name || ""
                   )}
                 </strong>
-
               </td>
-
 
               <td>
                 ${escapeHtml(
@@ -2055,13 +1907,11 @@
                 )}
               </td>
 
-
               <td>
                 ${escapeHtml(
                   item.email || ""
                 )}
               </td>
-
 
               <td>
                 ${escapeHtml(
@@ -2069,13 +1919,21 @@
                 )}
               </td>
 
-
               <td>
                 ${escapeHtml(
                   item.project_description || ""
                 )}
               </td>
 
+              <td>
+
+                <span
+                  class="priority-badge priority-${priority.type}"
+                >
+                  ${priority.label}
+                </span>
+
+              </td>
 
               <td>
 
@@ -2095,7 +1953,6 @@
 
               </td>
 
-
               <td>
 
                 <span
@@ -2103,7 +1960,6 @@
                 >
                   ${followUp.label}
                 </span>
-
 
                 ${
                   followUpDate
@@ -2117,20 +1973,50 @@
 
               </td>
 
-
               <td>
 
-                <button
-                  class="details-btn"
-                  onclick="viewInquiry(
-                    '${item.id}'
-                  )"
-                >
-                  View
-                </button>
+                <div class="action-group">
+
+                  <button
+                    class="action-btn action-view"
+                    onclick="viewInquiry(
+                      '${item.id}'
+                    )"
+                  >
+                    View
+                  </button>
+
+                  <button
+                    class="action-btn action-contact"
+                    onclick="markContacted(
+                      '${item.id}'
+                    )"
+                    ${
+                      item.status !== "New"
+                        ? "disabled"
+                        : ""
+                    }
+                  >
+                    Contacted
+                  </button>
+
+                  <button
+                    class="action-btn action-follow"
+                    onclick="quickFollowUp(
+                      '${item.id}'
+                    )"
+                    ${
+                      isClosed
+                        ? "disabled"
+                        : ""
+                    }
+                  >
+                    Follow-Up
+                  </button>
+
+                </div>
 
               </td>
-
 
             </tr>
 
@@ -2156,7 +2042,7 @@
 
 
     /* =========================================
-       VIEW INQUIRY
+       VIEW
        ========================================= */
 
     function viewInquiry(id) {
@@ -2164,13 +2050,11 @@
       currentInquiryId =
         id;
 
-
       const inquiry =
         window.inquiriesData?.find(
           item =>
             item.id === id
         );
-
 
       if (!inquiry) {
 
@@ -2182,12 +2066,13 @@
 
       }
 
-
       const followUp =
         getFollowUpStatus(
           inquiry.follow_up_date
         );
 
+      const priority =
+        getPriority(inquiry);
 
       document.getElementById(
         "detailName"
@@ -2195,13 +2080,11 @@
         inquiry.full_name ||
         "—";
 
-
       document.getElementById(
         "detailContact"
       ).textContent =
         inquiry.contact_number ||
         "—";
-
 
       document.getElementById(
         "detailEmail"
@@ -2209,13 +2092,11 @@
         inquiry.email ||
         "—";
 
-
       document.getElementById(
         "detailPreferredContact"
       ).textContent =
         inquiry.preferred_contact ||
         "—";
-
 
       document.getElementById(
         "detailProject"
@@ -2223,13 +2104,11 @@
         inquiry.project_type ||
         "—";
 
-
       document.getElementById(
         "detailStatus"
       ).textContent =
         inquiry.status ||
         "—";
-
 
       document.getElementById(
         "detailFollowUpDate"
@@ -2239,12 +2118,15 @@
         ) ||
         "—";
 
-
       document.getElementById(
         "detailFollowUpStatus"
       ).textContent =
         followUp.label;
 
+      document.getElementById(
+        "detailPriority"
+      ).textContent =
+        priority.label;
 
       document.getElementById(
         "detailDescription"
@@ -2252,20 +2134,17 @@
         inquiry.project_description ||
         "—";
 
-
       document.getElementById(
         "detailNotes"
       ).textContent =
         inquiry.notes ||
         "—";
 
-
       document.getElementById(
         "inquiryEditForm"
       ).classList.remove(
         "active"
       );
-
 
       document.getElementById(
         "inquiryModal"
@@ -2277,7 +2156,7 @@
 
 
     /* =========================================
-       EDIT INQUIRY
+       EDIT
        ========================================= */
 
     function editInquiry() {
@@ -2292,14 +2171,12 @@
 
       }
 
-
       const inquiry =
         window.inquiriesData?.find(
           item =>
             item.id ===
             currentInquiryId
         );
-
 
       if (!inquiry) {
 
@@ -2311,13 +2188,11 @@
 
       }
 
-
       document.getElementById(
         "editStatus"
       ).value =
         inquiry.status ||
         "New";
-
 
       document.getElementById(
         "editFollowUpDate"
@@ -2325,6 +2200,117 @@
         inquiry.follow_up_date ||
         "";
 
+      document.getElementById(
+        "editNotes"
+      ).value =
+        inquiry.notes ||
+        "";
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.add(
+        "active"
+      );
+
+    }
+
+
+    /* =========================================
+       QUICK CONTACT
+       ========================================= */
+
+    async function markContacted(id) {
+
+      const inquiry =
+        window.inquiriesData?.find(
+          item =>
+            item.id === id
+        );
+
+      if (!inquiry) {
+
+        alert(
+          "Inquiry not found."
+        );
+
+        return;
+
+      }
+
+      if (
+        inquiry.status !== "New"
+      ) {
+
+        return;
+
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("inquiries")
+          .update({
+            status: "Contacted"
+          })
+          .eq(
+            "id",
+            id
+          );
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          "Unable to update inquiry."
+        );
+
+        return;
+
+      }
+
+      await loadInquiries();
+
+    }
+
+
+    /* =========================================
+       QUICK FOLLOW-UP
+       ========================================= */
+
+    function quickFollowUp(id) {
+
+      const inquiry =
+        window.inquiriesData?.find(
+          item =>
+            item.id === id
+        );
+
+      if (!inquiry) {
+
+        alert(
+          "Inquiry not found."
+        );
+
+        return;
+
+      }
+
+      currentInquiryId =
+        id;
+
+      document.getElementById(
+        "editStatus"
+      ).value =
+        inquiry.status ||
+        "New";
+
+      document.getElementById(
+        "editFollowUpDate"
+      ).value =
+        inquiry.follow_up_date ||
+        "";
 
       document.getElementById(
         "editNotes"
@@ -2332,9 +2318,14 @@
         inquiry.notes ||
         "";
 
-
       document.getElementById(
         "inquiryEditForm"
+      ).classList.add(
+        "active"
+      );
+
+      document.getElementById(
+        "inquiryModal"
       ).classList.add(
         "active"
       );
@@ -2358,7 +2349,7 @@
 
 
     /* =========================================
-       SAVE INQUIRY CHANGES
+       SAVE
        ========================================= */
 
     async function saveInquiryChanges() {
@@ -2373,12 +2364,10 @@
 
       }
 
-
       const status =
         document.getElementById(
           "editStatus"
         ).value;
-
 
       const followUpDate =
         document.getElementById(
@@ -2386,12 +2375,10 @@
         ).value ||
         null;
 
-
       const notes =
         document.getElementById(
           "editNotes"
         ).value.trim();
-
 
       const {
         error
@@ -2415,13 +2402,9 @@
             currentInquiryId
           );
 
-
       if (error) {
 
-        console.error(
-          error
-        );
-
+        console.error(error);
 
         alert(
           "Unable to save changes.\n\n" +
@@ -2432,21 +2415,17 @@
 
       }
 
-
       document.getElementById(
         "inquiryEditForm"
       ).classList.remove(
         "active"
       );
 
-
       await loadInquiries();
-
 
       viewInquiry(
         currentInquiryId
       );
-
 
       alert(
         "Inquiry updated successfully."
@@ -2456,7 +2435,7 @@
 
 
     /* =========================================
-       CLOSE MODAL
+       CLOSE
        ========================================= */
 
     function closeInquiryModal() {
@@ -2467,13 +2446,11 @@
         "active"
       );
 
-
       document.getElementById(
         "inquiryEditForm"
       ).classList.remove(
         "active"
       );
-
 
       currentInquiryId =
         null;
@@ -2490,23 +2467,15 @@
       const statuses = [
 
         "New",
-
         "Contacted",
-
         "Consultation",
-
         "Quotation",
-
         "Won",
-
         "Production",
-
         "Completed",
-
         "Lost"
 
       ];
-
 
       return statuses
         .map(
@@ -2552,23 +2521,17 @@
             id
           );
 
-
       if (error) {
 
         alert(
           "Unable to update status."
         );
 
-
-        console.error(
-          error
-        );
-
+        console.error(error);
 
         return;
 
       }
-
 
       await loadInquiries();
 
@@ -2590,7 +2553,6 @@
           await supabaseClient
             .auth
             .signOut();
-
 
           showLogin();
 
@@ -2683,7 +2645,6 @@
       document.getElementById(
         "inquiryModal"
       );
-
 
     if (modal) {
 
@@ -2785,9 +2746,7 @@
 
     checkSession();
 
-
   </script>
-
 
 </body>
 </html>
