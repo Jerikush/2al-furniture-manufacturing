@@ -947,12 +947,17 @@ function viewInquiry(id) {
   document.getElementById("detailProject").textContent =
     inquiry.project_type || "—";
 
-  document.getElementById("detailStatus").textContent =
-    inquiry.status || "—";
+ document.getElementById("detailStatus").textContent =
+  inquiry.status || "—";
 
-  document.getElementById("detailDescription").textContent =
-    inquiry.project_description || "—";
+document.getElementById("detailFollowUpDate").textContent =
+  inquiry.follow_up_date || "—";
 
+document.getElementById("detailDescription").textContent =
+  inquiry.project_description || "—";
+
+document.getElementById("detailNotes").textContent =
+  inquiry.notes || "—";
   document.getElementById("inquiryModal").classList.add("active");
 }
   
@@ -1169,14 +1174,24 @@ document
             <span>STATUS</span>
             <strong id="detailStatus">—</strong>
           </div>
-
+          
+<div class="detail-item">
+  <span>FOLLOW-UP DATE</span>
+  <strong id="detailFollowUpDate">—</strong>
+</div>
+          
         </div>
 
         <div class="detail-item description-item">
           <span>DESCRIPTION</span>
           <p id="detailDescription">—</p>
         </div>
-
+        
+<div class="detail-item description-item">
+  <span>NOTES</span>
+  <p id="detailNotes">—</p>
+</div>
+        
       </div>
 
     </div>
