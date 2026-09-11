@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -21,6 +22,10 @@
       background: #f5f6f8;
       color: #18202b;
     }
+
+    /* =========================================
+       LOGIN
+       ========================================= */
 
     .login-screen {
       min-height: 100vh;
@@ -51,6 +56,12 @@
     }
 
     input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    input,
     select {
       width: 100%;
       padding: 13px;
@@ -75,9 +86,12 @@
     }
 
     .btn-gold {
-      width: 100%;
       background: #d4af37;
       color: #071426;
+    }
+
+    .login-box .btn-gold {
+      width: 100%;
     }
 
     .error {
@@ -85,6 +99,10 @@
       margin-top: 12px;
       font-size: 14px;
     }
+
+    /* =========================================
+       DASHBOARD
+       ========================================= */
 
     .dashboard {
       display: none;
@@ -116,6 +134,10 @@
       margin: auto;
     }
 
+    /* =========================================
+       STATS
+       ========================================= */
+
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -145,6 +167,10 @@
       color: #0b1f3a;
     }
 
+    /* =========================================
+       TABLE
+       ========================================= */
+
     .table-card {
       background: white;
       border-radius: 14px;
@@ -165,6 +191,39 @@
       color: #0b1f3a;
     }
 
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #searchInput,
+    #statusFilter {
+      height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(7, 20, 38, 0.14);
+      border-radius: 9px;
+      background: #ffffff;
+      color: #0b1f3a;
+      font-size: 13px;
+      outline: none;
+      margin: 0;
+    }
+
+    #searchInput {
+      width: 220px;
+    }
+
+    #statusFilter {
+      min-width: 150px;
+    }
+
+    #searchInput:focus,
+    #statusFilter:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
+    }
+
     .refresh {
       background: #0b1f3a;
       color: white;
@@ -173,7 +232,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 900px;
+      min-width: 1050px;
     }
 
     th,
@@ -189,6 +248,7 @@
       color: #697386;
       font-size: 11px;
       letter-spacing: .05em;
+      white-space: nowrap;
     }
 
     .status-select {
@@ -197,13 +257,307 @@
       padding: 8px;
     }
 
+    .details-btn {
+      background: #d4af37;
+      color: #071426;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
     .empty {
       text-align: center;
       padding: 40px;
       color: #697386;
     }
 
+    /* =========================================
+       FOLLOW-UP STATUS
+       ========================================= */
+
+    .followup-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 92px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      white-space: nowrap;
+    }
+
+    .followup-none {
+      background: #f1f3f5;
+      color: #697386;
+    }
+
+    .followup-upcoming {
+      background: rgba(11, 31, 58, 0.08);
+      color: #0b1f3a;
+    }
+
+    .followup-today {
+      background: rgba(212, 175, 55, 0.18);
+      color: #8a6d00;
+    }
+
+    .followup-overdue {
+      background: rgba(192, 57, 43, 0.12);
+      color: #c0392b;
+    }
+
+    .followup-date {
+      display: block;
+      margin-top: 5px;
+      color: #697386;
+      font-size: 11px;
+    }
+
+    /* =========================================
+       MODAL
+       ========================================= */
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(7, 20, 38, 0.68);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .inquiry-modal {
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 30px 90px rgba(7, 20, 38, 0.28);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 26px;
+      background: #0b1f3a;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      border-radius: 8px;
+      background: transparent;
+      color: #ffffff;
+      font-size: 25px;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .modal-close:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: #d4af37;
+    }
+
+    .modal-body {
+      padding: 28px;
+    }
+
+    .detail-section {
+      margin-bottom: 28px;
+    }
+
+    .detail-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-section h3 {
+      margin: 0 0 18px;
+      color: #0b1f3a;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-section h3::after {
+      content: "";
+      display: block;
+      width: 42px;
+      height: 2px;
+      margin-top: 9px;
+      background: #d4af37;
+      border-radius: 10px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .detail-item {
+      padding: 16px;
+      background: #f8f9fb;
+      border: 1px solid rgba(7, 20, 38, 0.07);
+      border-radius: 10px;
+    }
+
+    .detail-item span {
+      display: block;
+      margin-bottom: 7px;
+      color: #697386;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-item strong {
+      display: block;
+      color: #0b1f3a;
+      font-size: 14px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .description-item {
+      margin-top: 14px;
+    }
+
+    .description-item p {
+      margin: 0;
+      color: #374151;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* =========================================
+       EDIT FORM
+       ========================================= */
+
+    .edit-section {
+      display: none;
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(7, 20, 38, 0.08);
+    }
+
+    .edit-section.active {
+      display: block;
+    }
+
+    .edit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .edit-field {
+      margin-bottom: 16px;
+    }
+
+    .edit-field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #697386;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .edit-field input,
+    .edit-field select,
+    .edit-field textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 13px;
+      border: 1px solid rgba(7, 20, 38, 0.14);
+      border-radius: 9px;
+      background: #ffffff;
+      color: #0b1f3a;
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    .edit-field textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .edit-field input:focus,
+    .edit-field select:focus,
+    .edit-field textarea:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
+    }
+
+    .edit-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .edit-actions button {
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =========================================
+       MODAL FOOTER
+       ========================================= */
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 18px 26px;
+      border-top: 1px solid rgba(7, 20, 38, 0.08);
+    }
+
+    .modal-footer button {
+      min-width: 100px;
+      min-height: 42px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+
     @media (max-width: 900px) {
+
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -215,9 +569,86 @@
       header {
         padding: 16px 18px;
       }
+
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .table-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      #searchInput {
+        flex: 1;
+        min-width: 180px;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .table-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+      }
+
+      #searchInput {
+        width: 100%;
+        grid-column: 1 / -1;
+      }
+
+      #statusFilter,
+      .table-actions .refresh {
+        width: 100%;
+      }
+
+      .modal-overlay {
+        padding: 12px;
+      }
+
+      .inquiry-modal {
+        max-height: 94vh;
+        border-radius: 12px;
+      }
+
+      .modal-header {
+        padding: 18px;
+      }
+
+      .modal-body {
+        padding: 18px;
+      }
+
+      .modal-footer {
+        padding: 16px 18px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .edit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .edit-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .edit-actions button {
+        width: 100%;
+      }
+
     }
 
     @media (max-width: 500px) {
+
       .stats {
         grid-template-columns: 1fr;
       }
@@ -225,356 +656,24 @@
       .login-box {
         padding: 25px;
       }
+
+      header h1 {
+        font-size: 17px;
+      }
+
     }
-    /* =========================================
-   SEARCH & FILTER
-   ========================================= */
 
-.table-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#searchInput,
-#statusFilter {
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid rgba(7, 20, 38, 0.14);
-  border-radius: 9px;
-  background: #ffffff;
-  color: #0b1f3a;
-  font-size: 13px;
-  outline: none;
-}
-
-#searchInput {
-  width: 220px;
-}
-
-#statusFilter {
-  min-width: 150px;
-}
-
-#searchInput:focus,
-#statusFilter:focus {
-  border-color: #d4af37;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
-}
-
-@media (max-width: 900px) {
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .table-actions {
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
-  #searchInput {
-    flex: 1;
-    min-width: 180px;
-  }
-}
-
-@media (max-width: 600px) {
-  .table-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-  }
-
-  #searchInput {
-    width: 100%;
-    grid-column: 1 / -1;
-  }
-
-  #statusFilter,
-  .table-actions .refresh {
-    width: 100%;
-  }
-}/* =========================================
-   INQUIRY DETAILS MODAL
-   ========================================= */
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(7, 20, 38, 0.68);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  padding: 24px;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-overlay.active {
-  display: flex;
-}
-
-.inquiry-modal {
-  width: 100%;
-  max-width: 760px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 30px 90px rgba(7, 20, 38, 0.28);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 26px;
-  background: #0b1f3a;
-  border-bottom: 2px solid #d4af37;
-}
-
-.modal-header h2 {
-  margin: 0;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.modal-close {
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  border-radius: 8px;
-  background: transparent;
-  color: #ffffff;
-  font-size: 25px;
-  line-height: 1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.modal-close:hover {
-  background: rgba(212, 175, 55, 0.15);
-  color: #d4af37;
-}
-
-.modal-body {
-  padding: 28px;
-}
-
-.detail-section {
-  margin-bottom: 28px;
-}
-
-.detail-section:last-child {
-  margin-bottom: 0;
-}
-
-.detail-section h3 {
-  margin: 0 0 18px;
-  color: #0b1f3a;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.detail-section h3::after {
-  content: "";
-  display: block;
-  width: 42px;
-  height: 2px;
-  margin-top: 9px;
-  background: #d4af37;
-  border-radius: 10px;
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.detail-item {
-  padding: 16px;
-  background: #f8f9fb;
-  border: 1px solid rgba(7, 20, 38, 0.07);
-  border-radius: 10px;
-}
-
-.detail-item span {
-  display: block;
-  margin-bottom: 7px;
-  color: #697386;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.detail-item strong {
-  display: block;
-  color: #0b1f3a;
-  font-size: 14px;
-  font-weight: 600;
-  word-break: break-word;
-}
-
-.description-item {
-  margin-top: 14px;
-}
-
-.description-item p {
-  margin: 0;
-  color: #374151;
-  font-size: 14px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 18px 26px;
-  border-top: 1px solid rgba(7, 20, 38, 0.08);
-}
-
-.modal-footer .refresh {
-  min-width: 90px;
-  height: 42px;
-  border-radius: 9px;
-  cursor: pointer;
-}
-
-@media (max-width: 600px) {
-
-  .modal-overlay {
-    padding: 12px;
-  }
-
-  .inquiry-modal {
-    max-height: 94vh;
-    border-radius: 12px;
-  }
-
-  .modal-header {
-    padding: 18px;
-  }
-
-  .modal-body {
-    padding: 18px;
-  }
-
-  .modal-footer {
-    padding: 16px 18px;
-  }
-
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-
-}/* =========================================
-   INQUIRY EDIT FORM
-   ========================================= */
-
-.edit-section {
-  display: none;
-  margin-top: 28px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(7, 20, 38, 0.08);
-}
-
-.edit-section.active {
-  display: block;
-}
-
-.edit-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.edit-field {
-  margin-bottom: 16px;
-}
-
-.edit-field label {
-  display: block;
-  margin-bottom: 7px;
-  color: #697386;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.edit-field input,
-.edit-field select,
-.edit-field textarea {
-  width: 100%;
-  min-height: 44px;
-  padding: 11px 13px;
-  border: 1px solid rgba(7, 20, 38, 0.14);
-  border-radius: 9px;
-  background: #ffffff;
-  color: #0b1f3a;
-  font-size: 13px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.edit-field textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.edit-field input:focus,
-.edit-field select:focus,
-.edit-field textarea:focus {
-  border-color: #d4af37;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
-}
-
-.edit-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.edit-actions button {
-  min-height: 42px;
-  padding: 0 18px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-@media (max-width: 600px) {
-
-  .edit-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .edit-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .edit-actions button {
-    width: 100%;
-  }
-
-}
   </style>
-  
+
 </head>
 
 <body>
 
-  <!-- LOGIN -->
+
+  <!-- =========================================
+       LOGIN
+       ========================================= -->
+
   <div class="login-screen" id="loginScreen">
 
     <div class="login-box">
@@ -599,11 +698,17 @@
           required
         >
 
-        <button class="btn-gold" type="submit">
+        <button
+          class="btn-gold"
+          type="submit"
+        >
           Sign In
         </button>
 
-        <div class="error" id="loginError"></div>
+        <div
+          class="error"
+          id="loginError"
+        ></div>
 
       </form>
 
@@ -612,14 +717,23 @@
   </div>
 
 
-  <!-- DASHBOARD -->
-  <div class="dashboard" id="dashboard">
+  <!-- =========================================
+       DASHBOARD
+       ========================================= -->
+
+  <div
+    class="dashboard"
+    id="dashboard"
+  >
 
     <header>
 
       <h1>2AL Admin Dashboard</h1>
 
-      <button class="logout" id="logoutBtn">
+      <button
+        class="logout"
+        id="logoutBtn"
+      >
         Logout
       </button>
 
@@ -628,64 +742,127 @@
 
     <main>
 
+      <!-- STATS -->
+
       <div class="stats">
 
         <div class="stat">
+
           <span>TOTAL INQUIRIES</span>
-          <strong id="totalCount">0</strong>
+
+          <strong id="totalCount">
+            0
+          </strong>
+
         </div>
 
+
         <div class="stat">
+
           <span>NEW</span>
-          <strong id="newCount">0</strong>
+
+          <strong id="newCount">
+            0
+          </strong>
+
         </div>
 
+
         <div class="stat">
+
           <span>FOLLOW-UP</span>
-          <strong id="followupCount">0</strong>
+
+          <strong id="followupCount">
+            0
+          </strong>
+
         </div>
 
+
         <div class="stat">
+
           <span>COMPLETED</span>
-          <strong id="completedCount">0</strong>
+
+          <strong id="completedCount">
+            0
+          </strong>
+
         </div>
 
       </div>
 
 
+      <!-- INQUIRIES -->
+
       <div class="table-card">
 
-     <div class="table-header">
+        <div class="table-header">
 
-  <h2>Customer Inquiries</h2>
+          <h2>
+            Customer Inquiries
+          </h2>
 
-  <div class="table-actions">
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search inquiries..."
-    >
+          <div class="table-actions">
 
-    <select id="statusFilter">
-      <option value="All">All Status</option>
-      <option value="New">New</option>
-      <option value="Contacted">Contacted</option>
-      <option value="Consultation">Consultation</option>
-      <option value="Quotation">Quotation</option>
-      <option value="Won">Won</option>
-      <option value="Production">Production</option>
-      <option value="Completed">Completed</option>
-      <option value="Lost">Lost</option>
-    </select>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search inquiries..."
+            >
 
-    <button class="refresh" id="refreshBtn">
-      Refresh
-    </button>
 
-  </div>
+            <select id="statusFilter">
 
-</div>
+              <option value="All">
+                All Status
+              </option>
+
+              <option value="New">
+                New
+              </option>
+
+              <option value="Contacted">
+                Contacted
+              </option>
+
+              <option value="Consultation">
+                Consultation
+              </option>
+
+              <option value="Quotation">
+                Quotation
+              </option>
+
+              <option value="Won">
+                Won
+              </option>
+
+              <option value="Production">
+                Production
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
+
+              <option value="Lost">
+                Lost
+              </option>
+
+            </select>
+
+
+            <button
+              class="refresh"
+              id="refreshBtn"
+            >
+              Refresh
+            </button>
+
+          </div>
+
+        </div>
 
 
         <div id="tableContainer">
@@ -703,804 +880,1545 @@
   </div>
 
 
-<script>
-
-  /* =========================================
-     SUPABASE CONFIG
-     ========================================= */
-
-  const SUPABASE_URL = "https://smshlcnxqtkkawxcfugl.supabase.co";
-
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Fr1S92D4HeFlJM4apbVP4g_eKp4lpXS";
-
-
-  const supabaseClient =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
-
-  /* =========================================
-     LOGIN
-     ========================================= */
-
-  const loginScreen =
-    document.getElementById("loginScreen");
-
-  const dashboard =
-    document.getElementById("dashboard");
-
-  const loginForm =
-    document.getElementById("loginForm");
-
-  const loginError =
-    document.getElementById("loginError");
-
-
-  loginForm.addEventListener("submit", async function(e) {
-
-    e.preventDefault();
-
-    loginError.textContent = "";
-
-    const email =
-      document.getElementById("email").value;
-
-    const password =
-      document.getElementById("password").value;
-
-
-    const { error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-
-
-    if (error) {
-
-      loginError.textContent =
-        "Invalid email or password.";
-
-      return;
-
-    }
-
-
-    showDashboard();
-
-  });
-
-
-  /* =========================================
-     CHECK SESSION
-     ========================================= */
-
-  async function checkSession() {
-
-    const {
-      data: { session }
-    } = await supabaseClient.auth.getSession();
-
-
-    if (session) {
-
-      showDashboard();
-
-    } else {
-
-      showLogin();
-
-    }
-
-  }
-
-
-  function showLogin() {
-
-    loginScreen.style.display = "flex";
-
-    dashboard.style.display = "none";
-
-  }
-
-
-  function showDashboard() {
-
-    loginScreen.style.display = "none";
-
-    dashboard.style.display = "block";
-
-    loadInquiries();
-
-  }
-
-
-  /* =========================================
-     LOAD INQUIRIES
-     ========================================= */
-
-  async function loadInquiries() {
-
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("inquiries")
-      .select("*")
-      .order("created_at", {
-        ascending: false
-      });
-window.inquiriesData = data || [];
-
-    if (error) {
-
-      document.getElementById("tableContainer").innerHTML =
-        `<div class="empty">
-          Unable to load inquiries.
-        </div>`;
-
-      console.error(error);
-
-      return;
-
-    }
-
-
-    updateStats(data);
-
-    renderTable(data);
-
-  }
-
-
-  /* =========================================
-     STATS
-     ========================================= */
-
-  function updateStats(data) {
-
-    document.getElementById("totalCount").textContent =
-      data.length;
-
-
-    document.getElementById("newCount").textContent =
-      data.filter(item =>
-        item.status === "New"
-      ).length;
-
-
-    document.getElementById("followupCount").textContent =
-      data.filter(item =>
-        ["Contacted", "Consultation", "Quotation"]
-          .includes(item.status)
-      ).length;
-
-
-    document.getElementById("completedCount").textContent =
-      data.filter(item =>
-        item.status === "Completed"
-      ).length;
-
-  }
-
-
-  /* =========================================
-     TABLE
-     ========================================= */
-
-function renderTable(data) {
-
-  const container = document.getElementById("tableContainer");
-  const searchInput = document.getElementById("searchInput");
-  const statusFilter = document.getElementById("statusFilter");
-
-  const searchTerm = (searchInput?.value || "").toLowerCase().trim();
-  const selectedStatus = statusFilter?.value || "All";
-
-  const filteredData = data.filter(item => {
-
-    const searchableText = `
-      ${item.full_name || ""}
-      ${item.contact_number || ""}
-      ${item.email || ""}
-      ${item.project_type || ""}
-      ${item.project_description || ""}
-      ${item.status || ""}
-    `.toLowerCase();
-
-    const matchesSearch =
-      !searchTerm ||
-      searchableText.includes(searchTerm);
-
-    const matchesStatus =
-      selectedStatus === "All" ||
-      item.status === selectedStatus;
-
-    return matchesSearch && matchesStatus;
-
-  });
-
-  if (!filteredData.length) {
-
-    container.innerHTML =
-      `<div class="empty">
-        No matching inquiries found.
-      </div>`;
-
-    return;
-  }
-
-  let html = `
-    <table>
-      <thead>
-        <tr>
-          <th>DATE</th>
-          <th>CLIENT</th>
-          <th>CONTACT</th>
-          <th>EMAIL</th>
-          <th>PROJECT</th>
-          <th>DESCRIPTION</th>
-        <th>STATUS</th>
-<th>ACTION</th>
-        </tr>
-      </thead>
-
-      <tbody>
-  `;
-
-  filteredData.forEach(item => {
-
-    html += `
-      <tr>
-
-        <td>
-          ${formatDate(item.created_at)}
-        </td>
-
-        <td>
-          <strong>
-            ${escapeHtml(item.full_name || "")}
-          </strong>
-        </td>
-
-        <td>
-          ${escapeHtml(item.contact_number || "")}
-        </td>
-
-        <td>
-          ${escapeHtml(item.email || "")}
-        </td>
-
-        <td>
-          ${escapeHtml(item.project_type || "")}
-        </td>
-
-        <td>
-          ${escapeHtml(item.project_description || "")}
-        </td>
-
-        <td>
-
-          <select
-            class="status-select"
-            onchange="updateStatus('${item.id}', this.value)"
-          >
-
-            ${statusOptions(item.status)}
-
-          </select>
-
-        </td>
-<td>
-  <button
-    class="details-btn"
-    onclick="viewInquiry('${item.id}')"
+  <!-- =========================================
+       INQUIRY MODAL
+       ========================================= -->
+
+  <div
+    id="inquiryModal"
+    class="modal-overlay"
   >
-    View
-  </button>
-</td>
-      </tr>
-    `;
 
-  });
+    <div class="inquiry-modal">
 
-  html += `
-      </tbody>
-    </table>
-  `;
 
-  container.innerHTML = html;
+      <div class="modal-header">
 
-}
-let currentInquiryId = null;
+        <h2>
+          Inquiry Details
+        </h2>
 
-function viewInquiry(id) {
 
-  currentInquiryId = id;
+        <button
+          type="button"
+          class="modal-close"
+          onclick="closeInquiryModal()"
+        >
+          ×
+        </button>
 
-  const inquiry =
-    window.inquiriesData?.find(item => item.id === id);
+      </div>
 
-  if (!inquiry) {
-    alert("Inquiry not found.");
-    return;
-  }
 
-  document.getElementById("detailName").textContent =
-    inquiry.full_name || "—";
+      <div class="modal-body">
 
-  document.getElementById("detailContact").textContent =
-    inquiry.contact_number || "—";
 
-  document.getElementById("detailEmail").textContent =
-    inquiry.email || "—";
+        <!-- CLIENT INFORMATION -->
 
-  document.getElementById("detailPreferredContact").textContent =
-    inquiry.preferred_contact || "—";
+        <div class="detail-section">
 
-  document.getElementById("detailProject").textContent =
-    inquiry.project_type || "—";
+          <h3>
+            Client Information
+          </h3>
 
-  document.getElementById("detailStatus").textContent =
-    inquiry.status || "—";
 
-  document.getElementById("detailFollowUpDate").textContent =
-    inquiry.follow_up_date || "—";
+          <div class="detail-grid">
 
-  document.getElementById("detailDescription").textContent =
-    inquiry.project_description || "—";
+            <div class="detail-item">
 
-  document.getElementById("detailNotes").textContent =
-    inquiry.notes || "—";
+              <span>
+                CLIENT
+              </span>
 
-  document
-    .getElementById("inquiryModal")
-    .classList.add("active");
-}
+              <strong id="detailName">
+                —
+              </strong>
 
+            </div>
 
-function editInquiry() {
 
-  if (!currentInquiryId) {
-    alert("No inquiry selected.");
-    return;
-  }
+            <div class="detail-item">
 
-  const inquiry =
-    window.inquiriesData?.find(
-      item => item.id === currentInquiryId
-    );
+              <span>
+                CONTACT
+              </span>
 
-  if (!inquiry) {
-    alert("Inquiry not found.");
-    return;
-  }
+              <strong id="detailContact">
+                —
+              </strong>
 
-  document.getElementById("editStatus").value =
-    inquiry.status || "New";
+            </div>
 
-  document.getElementById("editFollowUpDate").value =
-    inquiry.follow_up_date || "";
 
-  document.getElementById("editNotes").value =
-    inquiry.notes || "";
+            <div class="detail-item">
 
-  document
-    .getElementById("inquiryEditForm")
-    .classList.add("active");
-}
+              <span>
+                EMAIL
+              </span>
 
+              <strong id="detailEmail">
+                —
+              </strong>
 
-function cancelEditInquiry() {
+            </div>
 
-  document
-    .getElementById("inquiryEditForm")
-    .classList.remove("active");
 
-}
+            <div class="detail-item">
 
+              <span>
+                PREFERRED CONTACT
+              </span>
 
-async function saveInquiryChanges() {
+              <strong id="detailPreferredContact">
+                —
+              </strong>
 
-  if (!currentInquiryId) {
-    alert("No inquiry selected.");
-    return;
-  }
+            </div>
 
-  const status =
-    document.getElementById("editStatus").value;
-
-  const followUpDate =
-    document.getElementById("editFollowUpDate").value || null;
-
-  const notes =
-    document.getElementById("editNotes").value.trim();
-
-  const { error } = await supabaseClient
-    .from("inquiries")
-    .update({
-      status: status,
-      follow_up_date: followUpDate,
-      notes: notes
-    })
-    .eq("id", currentInquiryId);
-
-  if (error) {
-
-    console.error(error);
-
-    alert(
-      "Unable to save changes.\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-  alert("Inquiry updated successfully.");
-
-  document
-    .getElementById("inquiryEditForm")
-    .classList.remove("active");
-
-  await loadInquiries();
-
-  viewInquiry(currentInquiryId);
-}
-
-
-function closeInquiryModal() {
-
-  document
-    .getElementById("inquiryModal")
-    .classList.remove("active");
-
-  document
-    .getElementById("inquiryEditForm")
-    .classList.remove("active");
-
-  currentInquiryId = null;
-
-}
- document.addEventListener("DOMContentLoaded", function() {
-
-  const modal = document.getElementById("inquiryModal");
-
-  if (modal) {
-
-    modal.addEventListener("click", function(event) {
-
-      if (event.target === this) {
-        closeInquiryModal();
-      }
-
-    });
-
-  }
-
-  document.addEventListener("keydown", function(event) {
-
-    if (event.key === "Escape") {
-      closeInquiryModal();
-    }
-
-  });
-
-});
-  /* =========================================
-     STATUS
-     ========================================= */
-
-  function statusOptions(current) {
-
-    const statuses = [
-      "New",
-      "Contacted",
-      "Consultation",
-      "Quotation",
-      "Won",
-      "Production",
-      "Completed",
-      "Lost"
-    ];
-
-
-    return statuses.map(status => `
-
-      <option
-        value="${status}"
-        ${status === current ? "selected" : ""}
-      >
-        ${status}
-      </option>
-
-    `).join("");
-
-  }
-
-
-  async function updateStatus(id, status) {
-
-    const {
-      error
-    } = await supabaseClient
-      .from("inquiries")
-      .update({ status })
-      .eq("id", id);
-
-
-    if (error) {
-
-      alert("Unable to update status.");
-
-      console.error(error);
-
-      return;
-
-    }
-
-
-    loadInquiries();
-
-  }
-
-
-  /* =========================================
-     LOGOUT
-     ========================================= */
-
-  document
-    .getElementById("logoutBtn")
-    .addEventListener("click", async function() {
-
-      await supabaseClient.auth.signOut();
-
-      showLogin();
-
-    });
-
-
-  /* =========================================
-     REFRESH
-     ========================================= */
-
-  document
-    .getElementById("refreshBtn")
-    .addEventListener("click", loadInquiries);
-  
-  document
-  .getElementById("searchInput")
-  .addEventListener("input", loadInquiries);
-
-
-document
-  .getElementById("statusFilter")
-  .addEventListener("change", loadInquiries);
-
-
-  /* =========================================
-     HELPERS
-     ========================================= */
-
-  function formatDate(date) {
-
-    return new Date(date).toLocaleDateString(
-      "en-PH",
-      {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      }
-    );
-
-  }
-
-
-  function escapeHtml(value) {
-
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-
-  }
-
-
-  checkSession();
-
-</script>
-<div id="inquiryModal" class="modal-overlay">
-
-  <div class="inquiry-modal">
-
-    <div class="modal-header">
-      <h2>Inquiry Details</h2>
-
-      <button
-        type="button"
-        class="modal-close"
-        onclick="closeInquiryModal()"
-      >
-        ×
-      </button>
-    </div>
-
-    <div class="modal-body">
-
-      <div class="detail-section">
-        <h3>Client Information</h3>
-
-        <div class="detail-grid">
-
-          <div class="detail-item">
-            <span>CLIENT</span>
-            <strong id="detailName">—</strong>
-          </div>
-
-          <div class="detail-item">
-            <span>CONTACT</span>
-            <strong id="detailContact">—</strong>
-          </div>
-
-          <div class="detail-item">
-            <span>EMAIL</span>
-            <strong id="detailEmail">—</strong>
-          </div>
-
-          <div class="detail-item">
-            <span>PREFERRED CONTACT</span>
-            <strong id="detailPreferredContact">—</strong>
           </div>
 
         </div>
-      </div>
 
 
-      <div class="detail-section">
-        <h3>Project Information</h3>
-<div id="inquiryEditForm" class="edit-section">
+        <!-- PROJECT INFORMATION -->
 
-  <div class="detail-section">
+        <div class="detail-section">
 
-    <h3>Update Inquiry</h3>
-
-    <div class="edit-grid">
-
-      <div class="edit-field">
-
-        <label for="editStatus">
-          STATUS
-        </label>
-
-        <select id="editStatus">
-
-          <option value="New">New</option>
-          <option value="Contacted">Contacted</option>
-          <option value="Consultation">Consultation</option>
-          <option value="Quotation">Quotation</option>
-          <option value="Won">Won</option>
-          <option value="Production">Production</option>
-          <option value="Completed">Completed</option>
-          <option value="Lost">Lost</option>
-
-        </select>
-
-      </div>
+          <h3>
+            Project Information
+          </h3>
 
 
-      <div class="edit-field">
+          <div class="detail-grid">
 
-        <label for="editFollowUpDate">
-          FOLLOW-UP DATE
-        </label>
+            <div class="detail-item">
 
-        <input
-          type="date"
-          id="editFollowUpDate"
+              <span>
+                PROJECT TYPE
+              </span>
+
+              <strong id="detailProject">
+                —
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                STATUS
+              </span>
+
+              <strong id="detailStatus">
+                —
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                FOLLOW-UP DATE
+              </span>
+
+              <strong id="detailFollowUpDate">
+                —
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="detail-item description-item">
+
+            <span>
+              DESCRIPTION
+            </span>
+
+            <p id="detailDescription">
+              —
+            </p>
+
+          </div>
+
+
+          <div class="detail-item description-item">
+
+            <span>
+              NOTES
+            </span>
+
+            <p id="detailNotes">
+              —
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- EDIT FORM -->
+
+        <div
+          id="inquiryEditForm"
+          class="edit-section"
         >
 
+          <div class="detail-section">
+
+            <h3>
+              Update Inquiry
+            </h3>
+
+
+            <div class="edit-grid">
+
+
+              <div class="edit-field">
+
+                <label for="editStatus">
+                  STATUS
+                </label>
+
+                <select id="editStatus">
+
+                  <option value="New">
+                    New
+                  </option>
+
+                  <option value="Contacted">
+                    Contacted
+                  </option>
+
+                  <option value="Consultation">
+                    Consultation
+                  </option>
+
+                  <option value="Quotation">
+                    Quotation
+                  </option>
+
+                  <option value="Won">
+                    Won
+                  </option>
+
+                  <option value="Production">
+                    Production
+                  </option>
+
+                  <option value="Completed">
+                    Completed
+                  </option>
+
+                  <option value="Lost">
+                    Lost
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="edit-field">
+
+                <label for="editFollowUpDate">
+                  FOLLOW-UP DATE
+                </label>
+
+                <input
+                  type="date"
+                  id="editFollowUpDate"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="edit-field">
+
+              <label for="editNotes">
+                NOTES
+              </label>
+
+              <textarea
+                id="editNotes"
+                placeholder="Add internal notes..."
+              ></textarea>
+
+            </div>
+
+
+            <div class="edit-actions">
+
+              <button
+                type="button"
+                class="refresh"
+                onclick="cancelEditInquiry()"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                type="button"
+                class="btn-gold"
+                onclick="saveInquiryChanges()"
+              >
+                Save Changes
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
       </div>
 
-    </div>
+
+      <!-- MODAL FOOTER -->
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="refresh"
+          onclick="closeInquiryModal()"
+        >
+          Close
+        </button>
 
 
-    <div class="edit-field">
+        <button
+          type="button"
+          class="btn-gold"
+          onclick="editInquiry()"
+        >
+          Edit Inquiry
+        </button>
 
-      <label for="editNotes">
-        NOTES
-      </label>
+      </div>
 
-      <textarea
-        id="editNotes"
-        placeholder="Add internal notes..."
-      ></textarea>
-
-    </div>
-
-
-    <div class="edit-actions">
-
-      <button
-        type="button"
-        class="refresh"
-        onclick="cancelEditInquiry()"
-      >
-        Cancel
-      </button>
-
-      <button
-        type="button"
-        class="btn-gold"
-        onclick="saveInquiryChanges()"
-      >
-        Save Changes
-      </button>
 
     </div>
 
   </div>
 
-</div>
-        <div class="detail-grid">
 
-          <div class="detail-item">
-            <span>PROJECT TYPE</span>
-            <strong id="detailProject">—</strong>
-          </div>
+  <script>
 
-          <div class="detail-item">
-            <span>STATUS</span>
-            <strong id="detailStatus">—</strong>
-          </div>
-          
-<div class="detail-item">
-  <span>FOLLOW-UP DATE</span>
-  <strong id="detailFollowUpDate">—</strong>
-</div>
-          
-        </div>
+    /* =========================================
+       SUPABASE CONFIG
+       ========================================= */
 
-        <div class="detail-item description-item">
-          <span>DESCRIPTION</span>
-          <p id="detailDescription">—</p>
-        </div>
-        
-<div class="detail-item description-item">
-  <span>NOTES</span>
-  <p id="detailNotes">—</p>
-</div>
-        
-      </div>
+    const SUPABASE_URL =
+      "https://smshlcnxqtkkawxcfugl.supabase.co";
 
-    </div>
 
-  <div class="modal-footer">
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_Fr1S92D4HeFlJM4apbVP4g_eKp4lpXS";
 
-  <button
-    type="button"
-    class="refresh"
-    onclick="closeInquiryModal()"
-  >
-    Close
-  </button>
 
-  <button
-    type="button"
-    class="btn-gold"
-    onclick="editInquiry()"
-  >
-    Edit Inquiry
-  </button>
+    const supabaseClient =
+      supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
-</div>
 
-  </div>
+    /* =========================================
+       GLOBAL STATE
+       ========================================= */
 
-</div>
+    let currentInquiryId = null;
+
+
+    /* =========================================
+       DOM ELEMENTS
+       ========================================= */
+
+    const loginScreen =
+      document.getElementById("loginScreen");
+
+
+    const dashboard =
+      document.getElementById("dashboard");
+
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+
+    const loginError =
+      document.getElementById("loginError");
+
+
+    /* =========================================
+       LOGIN
+       ========================================= */
+
+    loginForm.addEventListener(
+      "submit",
+      async function(e) {
+
+        e.preventDefault();
+
+        loginError.textContent = "";
+
+
+        const email =
+          document.getElementById("email").value;
+
+
+        const password =
+          document.getElementById("password").value;
+
+
+        const { error } =
+          await supabaseClient.auth
+            .signInWithPassword({
+              email,
+              password
+            });
+
+
+        if (error) {
+
+          loginError.textContent =
+            "Invalid email or password.";
+
+          return;
+
+        }
+
+
+        showDashboard();
+
+      }
+    );
+
+
+    /* =========================================
+       SESSION
+       ========================================= */
+
+    async function checkSession() {
+
+      const {
+        data: { session }
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      if (session) {
+
+        showDashboard();
+
+      } else {
+
+        showLogin();
+
+      }
+
+    }
+
+
+    function showLogin() {
+
+      loginScreen.style.display =
+        "flex";
+
+      dashboard.style.display =
+        "none";
+
+    }
+
+
+    function showDashboard() {
+
+      loginScreen.style.display =
+        "none";
+
+      dashboard.style.display =
+        "block";
+
+      loadInquiries();
+
+    }
+
+
+    /* =========================================
+       LOAD INQUIRIES
+       ========================================= */
+
+    async function loadInquiries() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("inquiries")
+          .select("*")
+          .order("created_at", {
+            ascending: false
+          });
+
+
+      if (error) {
+
+        document.getElementById(
+          "tableContainer"
+        ).innerHTML =
+          `<div class="empty">
+            Unable to load inquiries.
+          </div>`;
+
+
+        console.error(error);
+
+        return;
+
+      }
+
+
+      window.inquiriesData =
+        data || [];
+
+
+      updateStats(
+        window.inquiriesData
+      );
+
+
+      renderTable(
+        window.inquiriesData
+      );
+
+    }
+
+
+    /* =========================================
+       STATS
+       ========================================= */
+
+    function updateStats(data) {
+
+      document.getElementById(
+        "totalCount"
+      ).textContent =
+        data.length;
+
+
+      document.getElementById(
+        "newCount"
+      ).textContent =
+        data.filter(item =>
+          item.status === "New"
+        ).length;
+
+
+      /*
+       FOLLOW-UP COUNT
+
+       Counts inquiries that have
+       a follow-up date and are not
+       Completed or Lost.
+      */
+
+      document.getElementById(
+        "followupCount"
+      ).textContent =
+        data.filter(item =>
+          item.follow_up_date &&
+          !["Completed", "Lost"]
+            .includes(item.status)
+        ).length;
+
+
+      document.getElementById(
+        "completedCount"
+      ).textContent =
+        data.filter(item =>
+          item.status === "Completed"
+        ).length;
+
+    }
+
+
+    /* =========================================
+       DATE HELPERS
+       ========================================= */
+
+    function getTodayString() {
+
+      const now =
+        new Date();
+
+
+      const year =
+        now.getFullYear();
+
+
+      const month =
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
+
+
+      const day =
+        String(
+          now.getDate()
+        ).padStart(2, "0");
+
+
+      return `${year}-${month}-${day}`;
+
+    }
+
+
+    function getFollowUpStatus(date) {
+
+      if (!date) {
+
+        return {
+          type: "none",
+          label: "NO DATE"
+        };
+
+      }
+
+
+      const today =
+        getTodayString();
+
+
+      if (date < today) {
+
+        return {
+          type: "overdue",
+          label: "OVERDUE"
+        };
+
+      }
+
+
+      if (date === today) {
+
+        return {
+          type: "today",
+          label: "TODAY"
+        };
+
+      }
+
+
+      return {
+        type: "upcoming",
+        label: "UPCOMING"
+      };
+
+    }
+
+
+    function formatFollowUpDate(date) {
+
+      if (!date) {
+        return "";
+      }
+
+
+      return new Date(
+        date + "T00:00:00"
+      ).toLocaleDateString(
+        "en-PH",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       TABLE
+       ========================================= */
+
+    function renderTable(data) {
+
+      const container =
+        document.getElementById(
+          "tableContainer"
+        );
+
+
+      const searchInput =
+        document.getElementById(
+          "searchInput"
+        );
+
+
+      const statusFilter =
+        document.getElementById(
+          "statusFilter"
+        );
+
+
+      const searchTerm =
+        (
+          searchInput?.value || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+      const selectedStatus =
+        statusFilter?.value || "All";
+
+
+      const filteredData =
+        data.filter(item => {
+
+
+          const searchableText = `
+
+            ${item.full_name || ""}
+
+            ${item.contact_number || ""}
+
+            ${item.email || ""}
+
+            ${item.project_type || ""}
+
+            ${item.project_description || ""}
+
+            ${item.status || ""}
+
+            ${item.notes || ""}
+
+            ${item.follow_up_date || ""}
+
+          `.toLowerCase();
+
+
+          const matchesSearch =
+            !searchTerm ||
+            searchableText.includes(
+              searchTerm
+            );
+
+
+          const matchesStatus =
+            selectedStatus === "All" ||
+            item.status ===
+              selectedStatus;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+
+        });
+
+
+      if (!filteredData.length) {
+
+        container.innerHTML =
+          `<div class="empty">
+            No matching inquiries found.
+          </div>`;
+
+        return;
+
+      }
+
+
+      let html = `
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>DATE</th>
+
+              <th>CLIENT</th>
+
+              <th>CONTACT</th>
+
+              <th>EMAIL</th>
+
+              <th>PROJECT</th>
+
+              <th>DESCRIPTION</th>
+
+              <th>STATUS</th>
+
+              <th>FOLLOW-UP</th>
+
+              <th>ACTION</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+      `;
+
+
+      filteredData.forEach(item => {
+
+
+        const followUp =
+          getFollowUpStatus(
+            item.follow_up_date
+          );
+
+
+        const followUpDate =
+          formatFollowUpDate(
+            item.follow_up_date
+          );
+
+
+        html += `
+
+          <tr>
+
+            <td>
+              ${formatDate(
+                item.created_at
+              )}
+            </td>
+
+
+            <td>
+
+              <strong>
+                ${escapeHtml(
+                  item.full_name || ""
+                )}
+              </strong>
+
+            </td>
+
+
+            <td>
+              ${escapeHtml(
+                item.contact_number || ""
+              )}
+            </td>
+
+
+            <td>
+              ${escapeHtml(
+                item.email || ""
+              )}
+            </td>
+
+
+            <td>
+              ${escapeHtml(
+                item.project_type || ""
+              )}
+            </td>
+
+
+            <td>
+              ${escapeHtml(
+                item.project_description || ""
+              )}
+            </td>
+
+
+            <td>
+
+              <select
+                class="status-select"
+                onchange="updateStatus(
+                  '${item.id}',
+                  this.value
+                )"
+              >
+
+                ${statusOptions(
+                  item.status
+                )}
+
+              </select>
+
+            </td>
+
+
+            <td>
+
+              <span
+                class="followup-status followup-${followUp.type}"
+              >
+                ${followUp.label}
+              </span>
+
+              ${
+                followUpDate
+                  ? `
+                    <span class="followup-date">
+                      ${followUpDate}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </td>
+
+
+            <td>
+
+              <button
+                class="details-btn"
+                onclick="viewInquiry(
+                  '${item.id}'
+                )"
+              >
+                View
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      });
+
+
+      html += `
+
+          </tbody>
+
+        </table>
+
+      `;
+
+
+      container.innerHTML =
+        html;
+
+    }
+
+
+    /* =========================================
+       VIEW INQUIRY
+       ========================================= */
+
+    function viewInquiry(id) {
+
+      currentInquiryId =
+        id;
+
+
+      const inquiry =
+        window.inquiriesData?.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (!inquiry) {
+
+        alert(
+          "Inquiry not found."
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "detailName"
+      ).textContent =
+        inquiry.full_name ||
+        "—";
+
+
+      document.getElementById(
+        "detailContact"
+      ).textContent =
+        inquiry.contact_number ||
+        "—";
+
+
+      document.getElementById(
+        "detailEmail"
+      ).textContent =
+        inquiry.email ||
+        "—";
+
+
+      document.getElementById(
+        "detailPreferredContact"
+      ).textContent =
+        inquiry.preferred_contact ||
+        "—";
+
+
+      document.getElementById(
+        "detailProject"
+      ).textContent =
+        inquiry.project_type ||
+        "—";
+
+
+      document.getElementById(
+        "detailStatus"
+      ).textContent =
+        inquiry.status ||
+        "—";
+
+
+      document.getElementById(
+        "detailFollowUpDate"
+      ).textContent =
+        formatFollowUpDate(
+          inquiry.follow_up_date
+        ) ||
+        "—";
+
+
+      document.getElementById(
+        "detailDescription"
+      ).textContent =
+        inquiry.project_description ||
+        "—";
+
+
+      document.getElementById(
+        "detailNotes"
+      ).textContent =
+        inquiry.notes ||
+        "—";
+
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.remove(
+        "active"
+      );
+
+
+      document.getElementById(
+        "inquiryModal"
+      ).classList.add(
+        "active"
+      );
+
+    }
+
+
+    /* =========================================
+       EDIT INQUIRY
+       ========================================= */
+
+    function editInquiry() {
+
+      if (!currentInquiryId) {
+
+        alert(
+          "No inquiry selected."
+        );
+
+        return;
+
+      }
+
+
+      const inquiry =
+        window.inquiriesData?.find(
+          item =>
+            item.id ===
+            currentInquiryId
+        );
+
+
+      if (!inquiry) {
+
+        alert(
+          "Inquiry not found."
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "editStatus"
+      ).value =
+        inquiry.status ||
+        "New";
+
+
+      document.getElementById(
+        "editFollowUpDate"
+      ).value =
+        inquiry.follow_up_date ||
+        "";
+
+
+      document.getElementById(
+        "editNotes"
+      ).value =
+        inquiry.notes ||
+        "";
+
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.add(
+        "active"
+      );
+
+    }
+
+
+    /* =========================================
+       CANCEL EDIT
+       ========================================= */
+
+    function cancelEditInquiry() {
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.remove(
+        "active"
+      );
+
+    }
+
+
+    /* =========================================
+       SAVE INQUIRY CHANGES
+       ========================================= */
+
+    async function saveInquiryChanges() {
+
+      if (!currentInquiryId) {
+
+        alert(
+          "No inquiry selected."
+        );
+
+        return;
+
+      }
+
+
+      const status =
+        document.getElementById(
+          "editStatus"
+        ).value;
+
+
+      const followUpDate =
+        document.getElementById(
+          "editFollowUpDate"
+        ).value ||
+        null;
+
+
+      const notes =
+        document.getElementById(
+          "editNotes"
+        ).value.trim();
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("inquiries")
+          .update({
+
+            status:
+              status,
+
+            follow_up_date:
+              followUpDate,
+
+            notes:
+              notes
+
+          })
+          .eq(
+            "id",
+            currentInquiryId
+          );
+
+
+      if (error) {
+
+        console.error(
+          error
+        );
+
+
+        alert(
+          "Unable to save changes.\n\n" +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.remove(
+        "active"
+      );
+
+
+      await loadInquiries();
+
+
+      viewInquiry(
+        currentInquiryId
+      );
+
+
+      alert(
+        "Inquiry updated successfully."
+      );
+
+    }
+
+
+    /* =========================================
+       CLOSE MODAL
+       ========================================= */
+
+    function closeInquiryModal() {
+
+      document.getElementById(
+        "inquiryModal"
+      ).classList.remove(
+        "active"
+      );
+
+
+      document.getElementById(
+        "inquiryEditForm"
+      ).classList.remove(
+        "active"
+      );
+
+
+      currentInquiryId =
+        null;
+
+    }
+
+
+    /* =========================================
+       STATUS OPTIONS
+       ========================================= */
+
+    function statusOptions(current) {
+
+      const statuses = [
+
+        "New",
+
+        "Contacted",
+
+        "Consultation",
+
+        "Quotation",
+
+        "Won",
+
+        "Production",
+
+        "Completed",
+
+        "Lost"
+
+      ];
+
+
+      return statuses
+        .map(status => `
+
+          <option
+            value="${status}"
+            ${
+              status === current
+                ? "selected"
+                : ""
+            }
+          >
+            ${status}
+          </option>
+
+        `)
+        .join("");
+
+    }
+
+
+    /* =========================================
+       UPDATE STATUS
+       ========================================= */
+
+    async function updateStatus(
+      id,
+      status
+    ) {
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("inquiries")
+          .update({
+            status
+          })
+          .eq(
+            "id",
+            id
+          );
+
+
+      if (error) {
+
+        alert(
+          "Unable to update status."
+        );
+
+
+        console.error(
+          error
+        );
+
+
+        return;
+
+      }
+
+
+      loadInquiries();
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+       ========================================= */
+
+    document
+      .getElementById(
+        "logoutBtn"
+      )
+      .addEventListener(
+        "click",
+        async function() {
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+          showLogin();
+
+        }
+      );
+
+
+    /* =========================================
+       REFRESH
+       ========================================= */
+
+    document
+      .getElementById(
+        "refreshBtn"
+      )
+      .addEventListener(
+        "click",
+        loadInquiries
+      );
+
+
+    /* =========================================
+       SEARCH
+       ========================================= */
+
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .addEventListener(
+        "input",
+        function() {
+
+          renderTable(
+            window.inquiriesData ||
+            []
+          );
+
+        }
+      );
+
+
+    /* =========================================
+       STATUS FILTER
+       ========================================= */
+
+    document
+      .getElementById(
+        "statusFilter"
+      )
+      .addEventListener(
+        "change",
+        function() {
+
+          renderTable(
+            window.inquiriesData ||
+            []
+          );
+
+        }
+      );
+
+
+    /* =========================================
+       MODAL EVENTS
+       ========================================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        const modal =
+          document.getElementById(
+            "inquiryModal"
+          );
+
+
+        if (modal) {
+
+          modal.addEventListener(
+            "click",
+            function(event) {
+
+              if (
+                event.target ===
+                this
+              ) {
+
+                closeInquiryModal();
+
+              }
+
+            }
+          );
+
+        }
+
+
+        document.addEventListener(
+          "keydown",
+          function(event) {
+
+            if (
+              event.key ===
+              "Escape"
+            ) {
+
+              closeInquiryModal();
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       DATE FORMAT
+       ========================================= */
+
+    function formatDate(date) {
+
+      return new Date(
+        date
+      ).toLocaleDateString(
+        "en-PH",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       HTML ESCAPE
+       ========================================= */
+
+    function escapeHtml(value) {
+
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================
+       START
+       ========================================= */
+
+    checkSession();
+
+  </script>
+
 </body>
 </html>
