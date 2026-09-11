@@ -475,6 +475,98 @@
     grid-template-columns: 1fr;
   }
 
+}/* =========================================
+   INQUIRY EDIT FORM
+   ========================================= */
+
+.edit-section {
+  display: none;
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(7, 20, 38, 0.08);
+}
+
+.edit-section.active {
+  display: block;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.edit-field {
+  margin-bottom: 16px;
+}
+
+.edit-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: #697386;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.edit-field input,
+.edit-field select,
+.edit-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid rgba(7, 20, 38, 0.14);
+  border-radius: 9px;
+  background: #ffffff;
+  color: #0b1f3a;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.edit-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.edit-field input:focus,
+.edit-field select:focus,
+.edit-field textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.10);
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.edit-actions button {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+
+  .edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .edit-actions button {
+    width: 100%;
+  }
+
 }
   </style>
   
@@ -924,7 +1016,92 @@ function renderTable(data) {
 
 }
 function viewInquiry(id) {
+  currentInquiryId = id;
+let currentInquiryId = null;
 
+function editInquiry() {
+function cancelEditInquiry() {
+async function saveInquiryChanges() {
+
+  if (!currentInquiryId) {
+    alert("No inquiry selected.");
+    return;
+  }
+
+  const status =
+    document.getElementById("editStatus").value;
+
+  const followUpDate =
+    document.getElementById("editFollowUpDate").value || null;
+
+  const notes =
+    document.getElementById("editNotes").value.trim();
+
+  const { error } = await supabaseClient
+    .from("inquiries")
+    .update({
+      status: status,
+      follow_up_date: followUpDate,
+      notes: notes
+    })
+    .eq("id", currentInquiryId);
+
+  if (error) {
+
+    console.error(error);
+
+    alert(
+      "Unable to save changes.\n\n" +
+      error.message
+    );
+
+    return;
+  }
+
+  alert("Inquiry updated successfully.");
+
+  document
+    .getElementById("inquiryEditForm")
+    .classList.remove("active");
+
+  await loadInquiries();
+
+  viewInquiry(currentInquiryId);
+
+}
+  document
+    .getElementById("inquiryEditForm")
+    .classList.remove("active");
+
+}
+  if (!currentInquiryId) {
+    alert("No inquiry selected.");
+    return;
+  }
+
+  const inquiry =
+    window.inquiriesData?.find(
+      item => item.id === currentInquiryId
+    );
+
+  if (!inquiry) {
+    alert("Inquiry not found.");
+    return;
+  }
+
+  document.getElementById("editStatus").value =
+    inquiry.status || "New";
+
+  document.getElementById("editFollowUpDate").value =
+    inquiry.follow_up_date || "";
+
+  document.getElementById("editNotes").value =
+    inquiry.notes || "";
+
+  document
+    .getElementById("inquiryEditForm")
+    .classList.add("active");
+}
   const inquiry = window.inquiriesData?.find(item => item.id === id);
 
   if (!inquiry) {
@@ -1162,7 +1339,89 @@ document
 
       <div class="detail-section">
         <h3>Project Information</h3>
+<div id="inquiryEditForm" class="edit-section">
 
+  <div class="detail-section">
+
+    <h3>Update Inquiry</h3>
+
+    <div class="edit-grid">
+
+      <div class="edit-field">
+
+        <label for="editStatus">
+          STATUS
+        </label>
+
+        <select id="editStatus">
+
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Quotation">Quotation</option>
+          <option value="Won">Won</option>
+          <option value="Production">Production</option>
+          <option value="Completed">Completed</option>
+          <option value="Lost">Lost</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="edit-field">
+
+        <label for="editFollowUpDate">
+          FOLLOW-UP DATE
+        </label>
+
+        <input
+          type="date"
+          id="editFollowUpDate"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="edit-field">
+
+      <label for="editNotes">
+        NOTES
+      </label>
+
+      <textarea
+        id="editNotes"
+        placeholder="Add internal notes..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="edit-actions">
+
+      <button
+        type="button"
+        class="refresh"
+        onclick="cancelEditInquiry()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="btn-gold"
+        onclick="saveInquiryChanges()"
+      >
+        Save Changes
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
         <div class="detail-grid">
 
           <div class="detail-item">
@@ -1196,17 +1455,25 @@ document
 
     </div>
 
-    <div class="modal-footer">
+  <div class="modal-footer">
 
-      <button
-        type="button"
-        class="refresh"
-        onclick="closeInquiryModal()"
-      >
-        Close
-      </button>
+  <button
+    type="button"
+    class="refresh"
+    onclick="closeInquiryModal()"
+  >
+    Close
+  </button>
 
-    </div>
+  <button
+    type="button"
+    class="btn-gold"
+    onclick="editInquiry()"
+  >
+    Edit Inquiry
+  </button>
+
+</div>
 
   </div>
 
