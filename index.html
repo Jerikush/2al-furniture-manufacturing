@@ -1654,8 +1654,15 @@
   <header class="header">
     <div class="container nav">
 
-      <a href="#home" class="logo">
-  <img src="assets/logo.png" alt="2AL Furniture Manufacturing">
+  <a href="#home" class="logo">
+  <span class="logo-mark">
+    <img src="2AL-cube-logo.png" alt="">
+  </span>
+
+  <span class="logo-text">
+    <strong>2AL</strong>
+    <small>FURNITURE MANUFACTURING</small>
+  </span>
 </a>
 
       <button
@@ -3032,17 +3039,16 @@
 
       <div>
 
-        <div class="logo">
+       <div class="logo">
+  <span class="logo-mark">
+    <img src="2AL-cube-logo.png" alt="">
+  </span>
 
-          <span>
-            2AL
-          </span>
-
-          <small>
-            FURNITURE MANUFACTURING
-          </small>
-
-        </div>
+  <span class="logo-text">
+    <strong>2AL</strong>
+    <small>FURNITURE MANUFACTURING</small>
+  </span>
+</div>
 
         <p>
           Custom furniture and cabinetry built around your space,
@@ -3149,165 +3155,4 @@
 
 </body>
 </html>
-<!-- =======================================================
-     2AL OFFICIAL CUBE LOGO OVERRIDE
-======================================================== -->
 
-<style>
-
-  /* Official 2AL Cube Logo */
-  .logo {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 11px !important;
-    color: #fff !important;
-  }
-
-  .logo-mark {
-    width: 48px;
-    height: 48px;
-    flex: 0 0 48px;
-    display: block;
-  }
-
-  .logo-mark svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    overflow: visible;
-    filter: drop-shadow(0 5px 12px rgba(0,0,0,0.18));
-  }
-
-  .logo-text {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .logo-text strong {
-    font-family: "Manrope", sans-serif;
-    font-size: 15px;
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    color: #f0d58a;
-  }
-
-  .logo-text small {
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.72);
-    white-space: nowrap;
-  }
-
-  @media (max-width: 560px) {
-
-    .logo {
-      gap: 8px !important;
-    }
-
-    .logo-mark {
-      width: 42px;
-      height: 42px;
-      flex-basis: 42px;
-    }
-
-    .logo-text strong {
-      font-size: 13px;
-    }
-
-    .logo-text small {
-      font-size: 6px;
-    }
-
-  }
-
-</style>
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const cubeLogo = `
-    <svg
-      viewBox="0 0 1039 900"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-
-      <g fill="#CBAB58">
-
-        <polygon points="
-          18,289
-          518,578
-          688,480
-          591,424
-          518,465
-          215,289
-          348,211
-          751,444
-          1019,289
-          519,0
-          420,57
-          823,289
-          742,336
-          341,104
-        "/>
-
-        <polygon points="
-          0,321
-          0,899
-          98,899
-          99,708
-          398,880
-          403,899
-          500,899
-          501,610
-        "/>
-
-        <polygon points="
-          635,553
-          537,609
-          537,899
-          635,899
-        "/>
-
-        <polygon points="
-          1038,714
-          940,770
-          940,841
-          840,899
-          1037,899
-        "/>
-
-      </g>
-
-    </svg>
-  `;
-
-
-  /* HEADER LOGO */
-  document.querySelectorAll(".logo").forEach(function (logo) {
-
-    logo.innerHTML = `
-      <span class="logo-mark">
-        ${cubeLogo}
-      </span>
-
-      <span class="logo-text">
-
-        <strong>2AL</strong>
-
-        <small>
-          FURNITURE MANUFACTURING
-        </small>
-
-      </span>
-    `;
-
-  });
-
-});
-
-</script>
