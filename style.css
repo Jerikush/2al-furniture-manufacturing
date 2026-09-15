@@ -1528,3 +1528,25 @@ footer a:hover {
 #contact .contact-form textarea::placeholder {
   color: #9aa3af;
 }
+
+/* ================================
+   2AL OFFICIAL LOGO
+================================ */
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  display: block;
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+}
+@media (max-width: 768px) {
+  .logo img {
+    width: 190px;
+  }
+}
