@@ -203,7 +203,7 @@
     }
 
     /* =========================================================
-       COMPLETE 2AL LOGO
+       2AL LOGO
     ========================================================= */
 
     .logo {
@@ -215,6 +215,8 @@
       max-width: 42vw;
 
       line-height: 0;
+
+      overflow: hidden;
     }
 
     .logo-image {
@@ -1219,13 +1221,11 @@
     @keyframes stepFade {
       from {
         opacity: 0;
-
         transform: translateY(8px);
       }
 
       to {
         opacity: 1;
-
         transform: translateY(0);
       }
     }
@@ -1708,7 +1708,6 @@
 
       .hero-content {
         grid-template-columns: 1fr 0.8fr;
-
         gap: 40px;
       }
 
@@ -1840,7 +1839,6 @@
 
       .logo {
         width: 245px;
-
         max-width: calc(100vw - 90px);
       }
 
@@ -1964,7 +1962,9 @@
 
 <body>
 
-  <!-- PREMIUM AMBIENT BACKGROUND -->
+  <!-- =======================================================
+       AMBIENT BACKGROUND
+  ======================================================== -->
 
   <div class="ambient-bg" aria-hidden="true">
     <i></i>
@@ -1982,14 +1982,18 @@
 
     <div class="container nav">
 
-      <!-- COMPLETE 2AL LOGO -->
-
-      <a href="#home" class="logo" aria-label="2AL Furniture Manufacturing Home">
+      <a
+        href="#home"
+        class="logo"
+        aria-label="2AL Furniture Manufacturing Home"
+      >
 
         <img
           class="logo-image"
-          src="2AL-cube-logo.png"
+          src="./2AL-cube-logo.png"
           alt="2AL Furniture Manufacturing"
+          width="380"
+          height="68"
         >
 
       </a>
@@ -2000,6 +2004,7 @@
         id="menuToggle"
         type="button"
         aria-label="Open navigation"
+        aria-expanded="false"
       >
         ☰
       </button>
@@ -2007,29 +2012,17 @@
 
       <nav id="mainNav">
 
-        <a href="#home">
-          Home
-        </a>
+        <a href="#home">Home</a>
 
-        <a href="#services">
-          Services
-        </a>
+        <a href="#services">Services</a>
 
-        <a href="#projects">
-          Projects
-        </a>
+        <a href="#projects">Projects</a>
 
-        <a href="#about">
-          About
-        </a>
+        <a href="#about">About</a>
 
-        <a href="#calculator">
-          Calculator
-        </a>
+        <a href="#calculator">Calculator</a>
 
-        <a href="#contact">
-          Contact
-        </a>
+        <a href="#contact">Contact</a>
 
       </nav>
 
@@ -2174,10 +2167,7 @@
         <div class="service-grid">
 
           <article class="service-card">
-
-            <div class="service-number">
-              01
-            </div>
+            <div class="service-number">01</div>
 
             <h3>
               Kitchen Cabinets
@@ -2187,15 +2177,11 @@
               Functional and modern kitchen cabinetry customized
               to your space, lifestyle and storage needs.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              02
-            </div>
+            <div class="service-number">02</div>
 
             <h3>
               Wardrobes
@@ -2205,15 +2191,11 @@
               Space-efficient wardrobes designed around your
               storage requirements and room dimensions.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              03
-            </div>
+            <div class="service-number">03</div>
 
             <h3>
               Vanities
@@ -2223,15 +2205,11 @@
               Elegant bathroom and vanity solutions combining
               practical storage with clean modern design.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              04
-            </div>
+            <div class="service-number">04</div>
 
             <h3>
               Custom Cabinets
@@ -2241,15 +2219,11 @@
               Built-to-measure cabinetry for living rooms,
               bedrooms, offices and other spaces.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              05
-            </div>
+            <div class="service-number">05</div>
 
             <h3>
               Custom Furniture
@@ -2259,15 +2233,11 @@
               Furniture pieces created specifically around
               your requirements, dimensions and design.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              06
-            </div>
+            <div class="service-number">06</div>
 
             <h3>
               Design & Build
@@ -2277,15 +2247,11 @@
               From design development to manufacturing,
               we manage the process from concept to completion.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              07
-            </div>
+            <div class="service-number">07</div>
 
             <h3>
               Delivery & Installation
@@ -2295,15 +2261,11 @@
               Professional delivery and installation with
               proper final site preparation and checking.
             </p>
-
           </article>
 
 
           <article class="service-card">
-
-            <div class="service-number">
-              08
-            </div>
+            <div class="service-number">08</div>
 
             <h3>
               Quality & After-Sales
@@ -2313,7 +2275,6 @@
               Quality checking, turnover support and after-sales
               assistance for completed projects.
             </p>
-
           </article>
 
         </div>
@@ -2659,11 +2620,9 @@
 
 
           <div class="step-label">
-
             Step
             <span id="currentStep">1</span>
             of 6
-
           </div>
 
 
@@ -3376,8 +3335,6 @@
 
       <div>
 
-        <!-- COMPLETE 2AL LOGO -->
-
         <a
           href="#home"
           class="logo"
@@ -3386,8 +3343,10 @@
 
           <img
             class="logo-image"
-            src="2AL-cube-logo.png"
+            src="./2AL-cube-logo.png"
             alt="2AL Furniture Manufacturing"
+            width="330"
+            height="58"
           >
 
         </a>
@@ -3474,7 +3433,10 @@
   <script src="app.js"></script>
 
 
-  <!-- MOBILE NAV -->
+  <!-- =======================================================
+       MOBILE NAVIGATION
+       Kept here as the single active/close system.
+  ======================================================== -->
 
   <script>
 
@@ -3487,12 +3449,27 @@
         document.getElementById("mainNav");
 
 
-      if (!menuToggle || !mainNav) return;
+      if (!menuToggle || !mainNav) {
+        return;
+      }
 
 
       menuToggle.addEventListener("click", function () {
 
-        mainNav.classList.toggle("active");
+        const isOpen =
+          mainNav.classList.toggle("active");
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+        menuToggle.setAttribute(
+          "aria-label",
+          isOpen
+            ? "Close navigation"
+            : "Open navigation"
+        );
 
       });
 
@@ -3504,6 +3481,16 @@
           link.addEventListener("click", function () {
 
             mainNav.classList.remove("active");
+
+            menuToggle.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+            menuToggle.setAttribute(
+              "aria-label",
+              "Open navigation"
+            );
 
           });
 
